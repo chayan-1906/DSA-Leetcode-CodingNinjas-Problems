@@ -1833,11 +1833,14 @@ public class CodingNinjas {
 //		System.out.println ( firstMissing ( new int[]{3, 4, -1, 1}, 4 ) );  //  2
 //		System.out.println ( firstMissing ( new int[]{7, 8, 9, 11, 12}, 5 ) );  // 1
 
-		System.out.println ( recursiveProduct ( 10, 20 ) );
+//		System.out.println ( recursiveProduct ( 10, 20 ) );
+
+//		System.out.println ( getMinimumAnagramDifference ( "except", "accept" ) );
+//		System.out.println ( getMinimumAnagramDifference ( "aa", "bb" ) );
+
+//		System.out.println ( Arrays.toString ( anagramMapping ( 5, new int[]{10, 20, 30, 40, 50}, new int[]{20, 10, 40, 50, 30} ) ) );
 	}
 
-	// https://www.codingninjas.com/codestudio/problems/josephus_1214938
-	// TODO: SUBMIT IN 2x BOOSTER
 	public static int josephus(int n, int k) {
 		return findSurvivor ( n, k ) + 1;
 	}
@@ -1910,4 +1913,50 @@ public class CodingNinjas {
 		arrayList.add ( n );
 	}
 
+	public static int getMinimumAnagramDifference(String str1, String str2) {
+		HashMap<Character, Integer> hashMap = new HashMap<> ( );
+		int sum = 0;
+		for (int i = 0; i < str1.length ( ); i++) {
+			Character character = str1.charAt ( i );
+			hashMap.put ( character, hashMap.getOrDefault ( character, 0 ) + 1 );
+		}
+		System.out.println ( hashMap );
+		for (int i = 0; i < str2.length ( ); i++) {
+			Character character = str2.charAt ( i );
+			if (hashMap.containsKey ( character )) {
+				hashMap.put ( character, hashMap.get ( character ) - 1 );
+				if (hashMap.get ( character ) == 0) hashMap.remove ( character );
+			}
+		}
+		for (Entry<Character, Integer> entry : hashMap.entrySet ( )) {
+			Integer value = entry.getValue ( );
+			sum += value;
+		}
+		return sum;
+	}
+
+	public static boolean isAnagram(String str1, String str2) {
+		HashMap<Character, Integer> hashMap = new HashMap<> ( );
+		for (int i = 0; i < str1.length ( ); i++) {
+			Character character = str1.charAt ( i );
+			hashMap.put ( character, hashMap.getOrDefault ( character, 0 ) + 1 );
+		}
+		for (int i = 0; i < str2.length ( ); i++) {
+			Character character = str2.charAt ( i );
+			if (hashMap.containsKey ( character )) {
+				hashMap.put ( character, hashMap.get ( character ) - 1 );
+				if (hashMap.get ( character ) == 0) hashMap.remove ( character );
+			}
+		}
+		return hashMap.isEmpty ( );
+	}
+
+	public static int[] anagramMapping(int n, int[] a, int[] b) {
+		HashMap<Integer, Integer> hashMap = new HashMap<> ( );
+		int[] answer = new int[ a.length ];
+		for (int i = 0; i < b.length; i++) hashMap.put ( b[ i ], i );
+		System.out.println ( hashMap );
+		for (int i = 0; i < a.length; i++) answer[ i ] = hashMap.get ( a[ i ] );
+		return answer;
+	}
 }
