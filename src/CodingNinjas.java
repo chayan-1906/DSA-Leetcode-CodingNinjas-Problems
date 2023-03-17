@@ -1839,6 +1839,15 @@ public class CodingNinjas {
 //		System.out.println ( getMinimumAnagramDifference ( "aa", "bb" ) );
 
 //		System.out.println ( Arrays.toString ( anagramMapping ( 5, new int[]{10, 20, 30, 40, 50}, new int[]{20, 10, 40, 50, 30} ) ) );
+
+//		System.out.println ( leftRotate ( "codingninjas", 3 ) );    // ingninjascod
+//		System.out.println ( rightRotate ( "codingninjas", 3 ) );    // jascodingnin
+//		System.out.println ( leftRotate ( "c", 1 ) );    // c
+//		System.out.println ( rightRotate ( "c", 1 ) );    // c
+//		System.out.println ( leftRotate ( "ce", 7 ) );    // c
+//		System.out.println ( rightRotate ( "ce", 7 ) );    // c
+
+		System.out.println ( shortestCompletingWord ( "1s3 PSt", new String[]{"step", "steps", "stripe", "stepple"} ) );
 	}
 
 	public static int josephus(int n, int k) {
@@ -1958,5 +1967,47 @@ public class CodingNinjas {
 		System.out.println ( hashMap );
 		for (int i = 0; i < a.length; i++) answer[ i ] = hashMap.get ( a[ i ] );
 		return answer;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/remove-character_1263701
+	// TODO: SUBMIT 2x BOOSTER
+	public static String removeAllOccurrencesOfChar(String input, char c) {
+		for (int i = 0; i < input.length ( ); i++) {
+			if (input.charAt ( i ) == c)
+				input = input.replaceAll ( String.valueOf ( input.charAt ( i ) ), "" );
+		}
+		return input;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/first-unique-character-in-a-string_983606
+	// TODO: SUBMIT 2x BOOSTER
+	public static char firstNonRepeating(String str) {
+		LinkedHashMap<Character, Integer> hashMap = new LinkedHashMap<> ( );
+		for (int i = 0; i < str.length ( ); i++) {
+			Character character = str.charAt ( i );
+			hashMap.put ( character, hashMap.getOrDefault ( character, 0 ) + 1 );
+		}
+		for (Entry<Character, Integer> entry : hashMap.entrySet ( )) {
+			Character key = entry.getKey ( );
+			Integer value = entry.getValue ( );
+			if (value == 1) return key;
+		}
+		return (char) -1;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/left-and-right-rotation-of-a-string_840707
+	// TODO: SUBMIT 2x BOOSTER
+	public static String leftRotate(String str, int d) {
+		if (str.length ( ) == 1) return str;
+		if (d > str.length ( )) d %= str.length ( );
+		String s = str + str;
+		s = s.substring ( d, str.length ( ) + d );
+		return s;
+	}
+
+	public static String rightRotate(String str, int d) {
+		if (str.length ( ) == 1) return str;
+		if (d > str.length ( )) d %= str.length ( );
+		return str.substring ( str.length ( ) - d ) + str.substring ( 0, str.length ( ) - d );
 	}
 }
