@@ -1847,7 +1847,7 @@ public class CodingNinjas {
 //		System.out.println ( leftRotate ( "ce", 7 ) );    // c
 //		System.out.println ( rightRotate ( "ce", 7 ) );    // c
 
-		System.out.println ( shortestCompletingWord ( "1s3 PSt", new String[]{"step", "steps", "stripe", "stepple"} ) );
+//		System.out.println ( shortestCompletingWord ( "1s3 PSt", new String[]{"step", "steps", "stripe", "stepple"} ) );
 	}
 
 	public static int josephus(int n, int k) {
@@ -2009,5 +2009,17 @@ public class CodingNinjas {
 		if (str.length ( ) == 1) return str;
 		if (d > str.length ( )) d %= str.length ( );
 		return str.substring ( str.length ( ) - d ) + str.substring ( 0, str.length ( ) - d );
+	}
+
+	public static boolean isCircular(Node head) {
+		if (head == null || head.next == head) return true;
+		Node slowPtr = head;
+		Node fastPtr = head;
+		while (fastPtr != null && fastPtr.next != null) {
+			slowPtr = slowPtr.next;
+			fastPtr = fastPtr.next.next;
+			if (slowPtr == fastPtr && slowPtr == head) return true;
+		}
+		return false;
 	}
 }
