@@ -1490,7 +1490,7 @@ public class CodingNinjas {
 	}
 
 	// https://www.codingninjas.com/codestudio/problems/longest-subarray-with-zero-sum_6783450
-	// TODO: SUBMIT IN 2x BOOSTER
+	// TODO: SUBMIT IN 2x BOOSTER, PARTIALLY ACCEPTED
 	public static int getLongestZeroSumSubarrayLength(int[] array) {
 		LinkedHashMap<Integer, Integer> hashMap = new LinkedHashMap<> ( );
 		int prefixSum = 0;
@@ -1574,7 +1574,7 @@ public class CodingNinjas {
 	}
 
 	//	https://www.codingninjas.com/codestudio/problems/sort-an-array-of-0s-1s-and-2s_892977
-	// TODO: SUBMIT IN 2x BOOSTER
+	// TODO: PARTIALLY ACCEPTED, https://www.youtube.com/watch?v=tp8JIuCXBaU WATCH THIS VIDEO
 	public static void sortArray012(ArrayList<Integer> arrayList, int n) {
 		int count0 = 0, count1 = 0, count2 = 0;
 		for (Integer integer : arrayList) {
@@ -1597,8 +1597,6 @@ public class CodingNinjas {
 		}
 	}
 
-	// https://www.codingninjas.com/codestudio/problems/merge-sort_920442
-	// SUBMIT IN 2x BOOSTER
 	public static void mergeSort(int[] arr, int n) {
 		mergeSortSort ( arr, 0, n - 1 );
 		System.out.println ( Arrays.toString ( arr ) );
