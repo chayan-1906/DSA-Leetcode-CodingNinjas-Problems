@@ -1967,8 +1967,6 @@ public class CodingNinjas {
 		return answer;
 	}
 
-	// https://www.codingninjas.com/codestudio/problems/remove-character_1263701
-	// TODO: SUBMIT 2x BOOSTER
 	public static String removeAllOccurrencesOfChar(String input, char c) {
 		for (int i = 0; i < input.length ( ); i++) {
 			if (input.charAt ( i ) == c)
@@ -1977,8 +1975,6 @@ public class CodingNinjas {
 		return input;
 	}
 
-	// https://www.codingninjas.com/codestudio/problems/first-unique-character-in-a-string_983606
-	// TODO: SUBMIT 2x BOOSTER
 	public static char firstNonRepeating(String str) {
 		LinkedHashMap<Character, Integer> hashMap = new LinkedHashMap<> ( );
 		for (int i = 0; i < str.length ( ); i++) {
@@ -1993,8 +1989,6 @@ public class CodingNinjas {
 		return (char) -1;
 	}
 
-	// https://www.codingninjas.com/codestudio/problems/left-and-right-rotation-of-a-string_840707
-	// TODO: SUBMIT 2x BOOSTER
 	public static String leftRotate(String str, int d) {
 		if (str.length ( ) == 1) return str;
 		if (d > str.length ( )) d %= str.length ( );
