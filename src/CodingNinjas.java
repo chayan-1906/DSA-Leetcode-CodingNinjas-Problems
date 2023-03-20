@@ -1846,6 +1846,11 @@ public class CodingNinjas {
 //		System.out.println ( rightRotate ( "ce", 7 ) );    // c
 
 //		System.out.println ( shortestCompletingWord ( "1s3 PSt", new String[]{"step", "steps", "stripe", "stepple"} ) );
+
+//		System.out.println ( missingNumber ( new int[]{1, 2, 4, 5}, 5 ) );  // 3
+//		System.out.println ( missingNumber ( new int[]{1, 2, 3}, 4 ) );  // 4
+
+		System.out.println ( nthFibonacci ( 6 ) );  // 8
 	}
 
 	public static int josephus(int n, int k) {
@@ -2013,5 +2018,76 @@ public class CodingNinjas {
 			if (slowPtr == fastPtr && slowPtr == head) return true;
 		}
 		return false;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/square-root-integral_624660
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static int squareRoot(int a) {
+		int left = 0, right = a;
+		int sqrt = -1;
+		while (left <= right) {
+			int mid = left + (right - left) / 2;
+			int midSq = mid * mid;
+			if (midSq == a) return mid;
+			else if (midSq > a) right = mid - 1;
+			else {
+				sqrt = mid;
+				left = mid + 1;
+			}
+		}
+		return sqrt;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/missing-number_6680467
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static int missingNumber(int[] array, int N) {
+		HashSet<Integer> hashSet = new HashSet<> ( );
+		for (int integer : array) hashSet.add ( integer );
+		for (int i = 1; i < N; i++) {
+			if (!hashSet.contains ( i )) return i;
+		}
+		return N;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/nth-fibonacci-number_74156
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static int nthFibonacci(int N) {
+		int t1 = 0, t2 = 1;
+		int t3 = t2;
+		for (int i = 0; i < N - 1; i++) {
+			t3 = t1 + t2;
+			t1 = t2;
+			t2 = t3;
+		}
+		return t3;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/occurrence-of-x-in-a-sorted-array_630456
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static int countOccurrences(int[] arr, int x) {
+		int left = 0, right = arr.length - 1;
+		int firstOccur = -1, lastOccur = -1;
+		// find first occurrence
+		while (left <= right) {
+			int mid = left + (right - left) / 2;
+			if (arr[ mid ] == x) {
+				firstOccur = mid;
+				right = mid - 1;
+			} else if (arr[ mid ] > x) right = mid - 1;
+			else if (arr[ mid ] < x) left = mid + 1;
+		}
+
+		// find last occurrence
+		left = 0;
+		right = arr.length - 1;
+		while (left <= right) {
+			int mid = left + (right - left) / 2;
+			if (arr[ mid ] == x) {
+				lastOccur = mid;
+				left = mid + 1;
+			} else if (arr[ mid ] > x) right = mid - 1;
+			else if (arr[ mid ] < x) left = mid + 1;
+		}
+		return firstOccur == -1 && lastOccur == -1 ? 0 : lastOccur - firstOccur + 1;
 	}
 }
