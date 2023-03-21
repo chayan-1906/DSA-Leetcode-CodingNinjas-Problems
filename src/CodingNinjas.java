@@ -1548,8 +1548,6 @@ public class CodingNinjas {
 		return maxLen;
 	}
 
-	// https://www.codingninjas.com/codestudio/problems/longest-subarray-zero-sum_757507
-	// TODO: SUBMIT IN 2x BOOSTER
 	public static int lengthOfLongestSubarray(int[] arr) {
 		HashMap<Integer, Integer> hashMap = new HashMap<> ( );
 		int prefixSum = 0;
@@ -2049,8 +2047,6 @@ public class CodingNinjas {
 		return N;
 	}
 
-	// https://www.codingninjas.com/codestudio/problems/nth-fibonacci-number_74156
-	// TODO: SUBMIT IN 2x BOOSTER
 	public static int nthFibonacci(int N) {
 		int t1 = 0, t2 = 1;
 		int t3 = t2;
@@ -2089,5 +2085,33 @@ public class CodingNinjas {
 			else if (arr[ mid ] < x) left = mid + 1;
 		}
 		return firstOccur == -1 && lastOccur == -1 ? 0 : lastOccur - firstOccur + 1;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
+	// TODO: SUBMIT IN 2x BOOSTER
+	public int searchInRotatedSortedArray(int[] nums, int target) {
+		int left = 0, right = nums.length - 1;
+		while (left <= right) {
+			int mid = left + (right - left) / 2;
+			if (nums[ mid ] == target) return mid;
+			else if (nums[ left ] < nums[ mid ]) {
+				// left array sorted
+				if (nums[ left ] <= target && target < nums[ mid ]) right = mid - 1;
+				else if (nums[ left ] == target) return left;
+				else left = mid + 1;
+			} else {
+				// right array sorted
+				if (nums[ mid ] < target && target <= nums[ right ]) left = mid + 1;
+				else if (nums[ right ] == target) return right;
+				else right = mid - 1;
+			}
+		}
+		return -1;
+
+		/**
+		 * Testcase Dry Run --> {5, 1, 2, 3, 4}, target = 1
+		 * left = 0, right = 4, mid = 2: 2 ≠ target
+		 * left = 0, right = 1, mid = 2: 2 ≠ target
+		 */
 	}
 }
