@@ -259,6 +259,9 @@ public class LeetCode {
 //		System.out.println ( mostCommonWord ( "Bob hit a ball, the hit BALL flew far after it was hit.", new String[]{"hit"} ) );
 //		System.out.println ( mostCommonWord ( "a.", new String[]{""} ) );
 
+		System.out.println ( isPowerOfTwo ( 3 ) );  // false
+		System.out.println ( isPowerOfTwo ( 8 ) );  // true
+		System.out.println ( isPowerOfTwo ( 4 ) );  // true
 	}
 
 	public static int subarraySum(int[] nums, int k) {
@@ -366,6 +369,26 @@ public class LeetCode {
 			linkedListNode2.next = mergeK ( linkedListNode1, linkedListNode2.next );
 			return linkedListNode2;
 		}
+	}
+
+	public static boolean isPowerOfTwo(int n) {
+		if (n == 1 || n == 2) return true;
+		else if (n < 2) return false;
+		while (n % 2 == 0 && n != 0) {
+			if (n != 2) n = n / 2;
+			else n = 0;
+		}
+		return n == 0;
+	}
+
+	public boolean isPowerOfThree(int n) {
+		if (n == 1 || n == 3) return true;
+		else if (n < 3) return false;
+		while (n % 3 == 0 && n != 0) {
+			if (n != 3) n = n / 3;
+			else n = 0;
+		}
+		return n == 0;
 	}
 
 	public LinkedListNode mergeKLists(LinkedListNode[] lists) {

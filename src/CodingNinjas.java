@@ -2114,4 +2114,6 @@ public class CodingNinjas {
 		 * left = 0, right = 1, mid = 2: 2 ≠ target
 		 */
 	}
+
+
 }
