@@ -1848,7 +1848,11 @@ public class CodingNinjas {
 //		System.out.println ( missingNumber ( new int[]{1, 2, 4, 5}, 5 ) );  // 3
 //		System.out.println ( missingNumber ( new int[]{1, 2, 3}, 4 ) );  // 4
 
-		System.out.println ( nthFibonacci ( 6 ) );  // 8
+//		System.out.println ( nthFibonacci ( 6 ) );  // 8
+
+		System.out.println ( firstUniqueCharacter ( "palindromemordnilap" ) );  // 10
+//		System.out.println ( firstUniqueCharacter ( "notunique" ) );    // 2
+//		System.out.println ( firstUniqueCharacter ( "caaabbc" ) );  // -1
 	}
 
 	public static int josephus(int n, int k) {
@@ -2087,6 +2091,31 @@ public class CodingNinjas {
 		return firstOccur == -1 && lastOccur == -1 ? 0 : lastOccur - firstOccur + 1;
 	}
 
+	// https://www.codingninjas.com/codestudio/problems/first-unique-character-in-a-string_982933?topList=top-string-coding-interview-questions
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static int firstUniqueCharacter(String s) {
+		HashMap<Character, ArrayList<Integer>> hashMap = new HashMap<> ( );
+		for (int i = 0; i < s.length ( ); i++) {
+			Character character = s.charAt ( i );
+			if (hashMap.containsKey ( character )) {
+				ArrayList<Integer> arrayList = hashMap.get ( character );
+				arrayList.add ( i + 1 );
+				hashMap.put ( character, arrayList );
+			} else {
+				ArrayList<Integer> arrayList = new ArrayList<> ( );
+				arrayList.add ( i + 1 );
+				hashMap.put ( character, arrayList );
+			}
+		}
+		System.out.println ( hashMap );
+		for (Entry<Character, ArrayList<Integer>> e : hashMap.entrySet ( )) {
+			Character k = e.getKey ( );
+			ArrayList<Integer> v = e.getValue ( );
+			if (v.size ( ) == 1) return v.get ( 0 );
+		}
+		return -1;
+	}
+
 	// https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
 	// TODO: SUBMIT IN 2x BOOSTER
 	public int searchInRotatedSortedArray(int[] nums, int target) {
@@ -2114,6 +2143,4 @@ public class CodingNinjas {
 		 * left = 0, right = 1, mid = 2: 2 ≠ target
 		 */
 	}
-
-
 }

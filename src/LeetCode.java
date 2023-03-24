@@ -259,9 +259,12 @@ public class LeetCode {
 //		System.out.println ( mostCommonWord ( "Bob hit a ball, the hit BALL flew far after it was hit.", new String[]{"hit"} ) );
 //		System.out.println ( mostCommonWord ( "a.", new String[]{""} ) );
 
-		System.out.println ( isPowerOfTwo ( 3 ) );  // false
-		System.out.println ( isPowerOfTwo ( 8 ) );  // true
-		System.out.println ( isPowerOfTwo ( 4 ) );  // true
+//		System.out.println ( isPowerOfTwo ( 3 ) );  // false
+//		System.out.println ( isPowerOfTwo ( 8 ) );  // true
+//		System.out.println ( isPowerOfTwo ( 4 ) );  // true
+
+//		System.out.println ( removeDuplicates ( new int[]{1, 1, 2} ) ); /// 2
+//		System.out.println ( removeDuplicates ( new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4} ) ); /// 5
 	}
 
 	public static int subarraySum(int[] nums, int k) {
@@ -379,6 +382,25 @@ public class LeetCode {
 			else n = 0;
 		}
 		return n == 0;
+	}
+
+	public static int removeDuplicates(int[] nums) {
+		int j = 0;
+		for (int i = 1; i < nums.length; i++) {
+			if (nums[ i ] != nums[ j ]) {
+				j++;
+				nums[ j ] = nums[ i ];
+			}
+		}
+		return j + 1;
+	}
+
+	public boolean uniqueOccurrences(int[] arr) {
+		HashMap<Integer, Integer> hashMap = new HashMap<> ( );
+		for (int integer : arr)
+			hashMap.put ( integer, hashMap.getOrDefault ( integer, 0 ) + 1 );
+		HashSet<Integer> hashSet = new HashSet<> ( hashMap.values ( ) );
+		return hashSet.size ( ) == hashMap.size ( );
 	}
 
 	public boolean isPowerOfThree(int n) {
@@ -499,5 +521,13 @@ public class LeetCode {
 		}
 		if (countNeg % 2 == 0) return 1;
 		else return -1;
+	}
+
+	public int percentageLetter(String s, char letter) {
+		int count = 0;
+		for (int i = 0; i < s.length ( ); i++) {
+			if (s.charAt ( i ) == letter) count++;
+		}
+		return count * 100 / s.length ( );
 	}
 }
