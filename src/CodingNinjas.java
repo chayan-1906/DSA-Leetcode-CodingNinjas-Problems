@@ -1845,14 +1845,16 @@ public class CodingNinjas {
 
 //		System.out.println ( shortestCompletingWord ( "1s3 PSt", new String[]{"step", "steps", "stripe", "stepple"} ) );
 
-//		System.out.println ( missingNumber ( new int[]{1, 2, 4, 5}, 5 ) );  // 3
-//		System.out.println ( missingNumber ( new int[]{1, 2, 3}, 4 ) );  // 4
+		System.out.println ( missingNumber ( new int[]{1, 2, 4, 5}, 5 ) );  // 3
+		System.out.println ( missingNumber ( new int[]{1, 2, 3}, 4 ) );  // 4
 
 //		System.out.println ( nthFibonacci ( 6 ) );  // 8
 
-		System.out.println ( firstUniqueCharacter ( "palindromemordnilap" ) );  // 10
+//		System.out.println ( firstUniqueCharacter ( "palindromemordnilap" ) );  // 10
 //		System.out.println ( firstUniqueCharacter ( "notunique" ) );    // 2
 //		System.out.println ( firstUniqueCharacter ( "caaabbc" ) );  // -1
+
+//		System.out.println ( squareRoot ( 111111 ) );   // 333
 	}
 
 	public static int josephus(int n, int k) {
@@ -2029,7 +2031,7 @@ public class CodingNinjas {
 		int sqrt = -1;
 		while (left <= right) {
 			int mid = left + (right - left) / 2;
-			int midSq = mid * mid;
+			long midSq = (long) mid * mid;
 			if (midSq == a) return mid;
 			else if (midSq > a) right = mid - 1;
 			else {
@@ -2041,7 +2043,7 @@ public class CodingNinjas {
 	}
 
 	// https://www.codingninjas.com/codestudio/problems/missing-number_6680467
-	// TODO: SUBMIT IN 2x BOOSTER
+	// TODO: SUBMIT IN 2x BOOSTER, ASKED IN GFG CHAT
 	public static int missingNumber(int[] array, int N) {
 		HashSet<Integer> hashSet = new HashSet<> ( );
 		for (int integer : array) hashSet.add ( integer );
