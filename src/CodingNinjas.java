@@ -1845,8 +1845,8 @@ public class CodingNinjas {
 
 //		System.out.println ( shortestCompletingWord ( "1s3 PSt", new String[]{"step", "steps", "stripe", "stepple"} ) );
 
-		System.out.println ( missingNumber ( new int[]{1, 2, 4, 5}, 5 ) );  // 3
-		System.out.println ( missingNumber ( new int[]{1, 2, 3}, 4 ) );  // 4
+//		System.out.println ( missingNumber ( new int[]{1, 2, 4, 5}, 5 ) );  // 3
+//		System.out.println ( missingNumber ( new int[]{1, 2, 3}, 4 ) );  // 4
 
 //		System.out.println ( nthFibonacci ( 6 ) );  // 8
 
@@ -1855,6 +1855,13 @@ public class CodingNinjas {
 //		System.out.println ( firstUniqueCharacter ( "caaabbc" ) );  // -1
 
 //		System.out.println ( squareRoot ( 111111 ) );   // 333
+
+		System.out.println ( groupPhoto ( new int[]{2, 1, 3, 1, 4} ) ); // 7
+		System.out.println ( groupPhoto ( new int[]{3, 1, 2} ) ); // 5
+		System.out.println ( groupPhoto ( new int[]{2, 7, 8, 1} ) ); // 10
+		System.out.println ( groupPhoto ( new int[]{1, 1, 2, 1, 2, 1} ) ); // 3
+		System.out.println ( groupPhoto ( new int[]{4, 1, 1, 4} ) ); // 8
+		System.out.println ( groupPhoto ( new int[]{19, 16, 8, 7, 12, 19, 10} ) ); // 38
 	}
 
 	public static int josephus(int n, int k) {
@@ -2042,15 +2049,18 @@ public class CodingNinjas {
 		return sqrt;
 	}
 
-	// https://www.codingninjas.com/codestudio/problems/missing-number_6680467
-	// TODO: SUBMIT IN 2x BOOSTER, ASKED IN GFG CHAT
 	public static int missingNumber(int[] array, int N) {
-		HashSet<Integer> hashSet = new HashSet<> ( );
-		for (int integer : array) hashSet.add ( integer );
-		for (int i = 1; i < N; i++) {
-			if (!hashSet.contains ( i )) return i;
+		boolean[] boolArray = new boolean[ N + 1 ];
+		Arrays.fill ( boolArray, false );
+		for (int integer : array) {
+			System.out.println ( integer );
+			boolArray[ integer ] = true;
 		}
-		return N;
+		System.out.println ( Arrays.toString ( boolArray ) );
+		for (int i = 1; i < boolArray.length; i++) {
+			if (!boolArray[ i ]) return i;
+		}
+		return 0;
 	}
 
 	public static int nthFibonacci(int N) {
@@ -2116,6 +2126,66 @@ public class CodingNinjas {
 			if (v.size ( ) == 1) return v.get ( 0 );
 		}
 		return -1;
+	}
+
+	public static void swap(int[] arr, int i, int j) {
+		int temp = arr[ i ];
+		arr[ i ] = arr[ j ];
+		arr[ j ] = temp;
+	}
+
+	public static int groupPhoto(int[] a) {
+//		System.out.println ( Arrays.toString ( a ) );
+		int maxIndex = 0;
+		int max = Integer.MIN_VALUE;
+		int secondMaxIndex = 0;
+		int secondMax = Integer.MIN_VALUE;
+		// find max height
+		for (int i = 0; i < a.length; i++) {
+			int height = a[ i ];
+			if (a[ maxIndex ] <= height) {
+				maxIndex = i;
+				if (max == height) {
+					secondMaxIndex = maxIndex;
+					secondMax = max;
+				} else max = height;
+			}
+		}
+		if (secondMax != max) {
+			for (int i = 0; i < a.length; i++) {
+				int height = a[ i ];
+				if (maxIndex != i && secondMax <= a[ i ]) {
+					secondMaxIndex = i;
+					secondMax = height;
+				}
+			}
+		}
+//		System.out.println ( "maxIndex = " + maxIndex );
+//		System.out.println ( "max = " + max );
+//		System.out.println ( "secondMaxIndex = " + secondMaxIndex );
+//		System.out.println ( "secondMax = " + secondMax );
+
+		if (a[ 0 ] == max) {
+			swap ( a, a.length - 1, secondMaxIndex );
+//			System.out.println ( "if " + Arrays.toString ( a ) );
+		} else if (a[ a.length - 1 ] == max) {
+			swap ( a, 0, secondMaxIndex );
+//			System.out.println ( "else if " + Arrays.toString ( a ) );
+		} else {
+			// if terminal heights are not max
+			// if a[0] >= a[length-1] swap max with a[length-1]
+			// else swap max with a[0]
+			boolean firstGreater = a[ 0 ] >= a[ a.length - 1 ];
+			if (firstGreater) {
+				// swap max height with first height
+				swap ( a, a.length - 1, maxIndex );
+			} else {
+				// swap max height with last height
+				swap ( a, 0, maxIndex );
+			}
+//			System.out.println ( "else " + Arrays.toString ( a ) );
+		}
+		return a[ 0 ] + a[ a.length - 1 ];
 	}
 
 	// https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
