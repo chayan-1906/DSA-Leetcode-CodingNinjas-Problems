@@ -265,6 +265,13 @@ public class LeetCode {
 
 //		System.out.println ( removeDuplicates ( new int[]{1, 1, 2} ) ); /// 2
 //		System.out.println ( removeDuplicates ( new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4} ) ); /// 5
+
+//		System.out.println ( reverseOnlyLetters ( "ab-cd" ) );  // dc-ba
+//		System.out.println ( reverseOnlyLetters ( "a-bC-dEf-ghIj" ) );  // j-Ih-gfE-dCba
+//		System.out.println ( reverseOnlyLetters ( "Test1ng-Leet=code-Q!" ) );   // Qedo1ct-eeLg=ntse-T!
+
+//		System.out.println ( reverseVowels ( "hello" ) );   // holle
+//		System.out.println ( reverseVowels ( "leetcode" ) );   // leotcede
 	}
 
 	public static int subarraySum(int[] nums, int k) {
@@ -393,6 +400,81 @@ public class LeetCode {
 			}
 		}
 		return j + 1;
+	}
+
+	public static String reverseOnlyLetters(String s) {
+		StringBuilder stringBuilder = new StringBuilder ( s );
+		int i = 0, j = stringBuilder.length ( ) - 1;
+		while (i < stringBuilder.length ( ) && i < j) {
+			char ithChar = stringBuilder.charAt ( i );
+			char jthChar = stringBuilder.charAt ( j );
+			boolean ithLetterCondition = (ithChar >= 'a' && ithChar <= 'z')
+					|| (ithChar >= 'A' && ithChar <= 'Z');
+			boolean jthLetterCondition = (jthChar >= 'a' && jthChar <= 'z')
+					|| (jthChar >= 'A' && jthChar <= 'Z');
+			if (ithLetterCondition && jthLetterCondition) {
+				char temp = ithChar;
+				stringBuilder.setCharAt ( i, jthChar );
+				stringBuilder.setCharAt ( j, temp );
+				i++;
+				j--;
+			} else if (!ithLetterCondition) i++;
+			else j--;
+		}
+		return stringBuilder.toString ( );
+	}
+
+	public static boolean checkStraightLine(int[][] coordinates) {
+		int x0 = coordinates[ 0 ][ 0 ];
+		int x1 = coordinates[ 1 ][ 0 ];
+		int y0 = coordinates[ 0 ][ 1 ];
+		int y1 = coordinates[ 1 ][ 1 ];
+		int dx = x1 - x0;
+		int dy = y1 - y0;
+		for (int i = 2; i < coordinates.length; i++) {
+			int x = coordinates[ i ][ 0 ];
+			int y = coordinates[ i ][ 1 ];
+			if ((x - x0) * dy != (y - y0) * dx) return false;
+		}
+		return true;
+	}
+
+	public static String reverseVowels(String s) {
+		StringBuilder stringBuilder = new StringBuilder ( s );
+		int i = 0;
+		int j = stringBuilder.length ( ) - 1;
+		while (i < stringBuilder.length ( ) && i < j) {
+			char ithCharacter = stringBuilder.charAt ( i );
+			char jthCharacter = stringBuilder.charAt ( j );
+			boolean ithIsVowel = ithCharacter == 'a' || ithCharacter == 'A'
+					|| ithCharacter == 'e' || ithCharacter == 'E'
+					|| ithCharacter == 'i' || ithCharacter == 'I'
+					|| ithCharacter == 'o' || ithCharacter == 'O'
+					|| ithCharacter == 'u' || ithCharacter == 'U';
+			boolean jthIsVowel = jthCharacter == 'a' || jthCharacter == 'A'
+					|| jthCharacter == 'e' || jthCharacter == 'E'
+					|| jthCharacter == 'i' || jthCharacter == 'I'
+					|| jthCharacter == 'o' || jthCharacter == 'O'
+					|| jthCharacter == 'u' || jthCharacter == 'U';
+			if (ithIsVowel && jthIsVowel) {
+				char temp = ithCharacter;
+				stringBuilder.setCharAt ( i, jthCharacter );
+				stringBuilder.setCharAt ( j, temp );
+				i++;
+				j--;
+			} else if (!ithIsVowel) i++;
+			else j--;
+		}
+		return stringBuilder.toString ( );
+	}
+
+	public boolean kLengthApart(int[] nums, int k) {
+		ArrayList<Integer> arrayList = new ArrayList<> ( );
+		for (int i = 0; i < nums.length; i++) if (nums[ i ] == 1) arrayList.add ( i );
+		for (int i = 0; i < arrayList.size ( ) - 1; i++) {
+			if (arrayList.get ( i + 1 ) - arrayList.get ( i ) < k + 1) return false;
+		}
+		return true;
 	}
 
 	public boolean uniqueOccurrences(int[] arr) {
