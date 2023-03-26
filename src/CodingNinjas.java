@@ -2188,6 +2188,46 @@ public class CodingNinjas {
 		return a[ 0 ] + a[ a.length - 1 ];
 	}
 
+	// https://www.codingninjas.com/codestudio/problems/search-the-element_1806887
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static int searchInRotatedSorted(int[] arr, int key) {
+		int left = 0, right = arr.length - 1;
+		while (left <= right) {
+			int mid = left + (right - left) / 2;
+			if (arr[ mid ] == key) return mid;
+			else if (arr[ left ] < arr[ mid ]) {
+				// left array sorted
+				if (arr[ left ] <= key && key < arr[ mid ]) right = mid - 1;
+				else if (arr[ left ] == key) return left;
+				else left = mid + 1;
+			} else {
+				// right array sorted
+				if (arr[ mid ] < key && key <= arr[ right ]) left = mid + 1;
+				else if (arr[ right ] == key) return right;
+				else right = mid - 1;
+			}
+		}
+		return -1;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/find-the-single-element_6680465
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static int getSingleElement(int[] arr) {
+		int left = 0, right = arr.length - 1;
+		while (left <= right) {
+			int mid = left + (right - left) / 2;
+			if (left == right) return arr[ left ];
+			if (mid % 2 == 0) {
+				if (arr[ mid ] == arr[ mid + 1 ]) left = mid + 2;
+				else right = mid;
+			} else {
+				if (arr[ mid ] == arr[ mid - 1 ]) left = mid + 1;
+				else right = mid - 1;
+			}
+		}
+		return -1;
+	}
+
 	// https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
 	// TODO: SUBMIT IN 2x BOOSTER
 	public int searchInRotatedSortedArray(int[] nums, int target) {
