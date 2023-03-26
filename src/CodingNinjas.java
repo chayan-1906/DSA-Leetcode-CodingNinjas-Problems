@@ -2228,6 +2228,87 @@ public class CodingNinjas {
 		return -1;
 	}
 
+	// https://www.codingninjas.com/codestudio/problems/allocate-books_1090540
+	// https://www.codingninjas.com/codestudio/problems/allocate-books_1089560
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static int allocateBooks(ArrayList<Integer> arr, int n, int m) {
+		if (arr.size ( ) < m) return -1;
+		int sum = 0, max = 0;
+		for (int i = 0; i < arr.size ( ); i++) {
+			sum += arr.get ( i );
+			max = Math.max ( max, arr.get ( i ) );
+		}
+		int low = max, high = sum, minPages = 0;
+		while (low <= high) {
+			int mid = low + (high - low) / 2;
+			if (isFeasible ( arr, m, mid )) {
+				minPages = mid;
+				high = mid - 1;
+			} else low = mid + 1;
+		}
+		return minPages;
+	}
+
+	private static boolean isFeasible(ArrayList<Integer> arr, int m, int mid) {
+		int sum = 0, requiredStudents = 1;
+		for (int i = 0; i < arr.size ( ); i++) {
+			if (sum + arr.get ( i ) > mid) {
+				requiredStudents++;
+				sum = arr.get ( i );
+			} else sum += arr.get ( i );
+		}
+		return requiredStudents <= m;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/square-root-decimal_1095655
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static double squareRootDecimal(long n, int precision) {
+		long low = 0, high = n;
+		double sqrt = 0;
+		while (low <= high) {
+			long mid = low + (high - low) / 2;
+			long midSq = mid * mid;
+			if (n == midSq) {
+				sqrt = mid;
+				break;
+			} else if (n > midSq) {
+				low = mid + 1;
+				sqrt = mid;
+			} else high = mid - 1;
+		}
+		double increment = 0.1;
+		for (int i = 0; i < precision; i++) {
+			while (sqrt * sqrt <= n) sqrt += increment;
+			sqrt -= increment;
+			increment /= 10;
+		}
+		return sqrt;
+	}
+
+	// https://www.codingninjas.com/codestudio/problems/median-of-two-sorted-arrays_985294
+	// TODO: SUBMIT IN 2x BOOSTER
+	public static double median(int[] a, int[] b) {
+		int begin = 0, end = a.length;
+		int n1 = a.length, n2 = b.length;
+		while (begin <= end) {
+			int i1 = begin + (end - begin) / 2;
+			int i2 = (n1 + n2 + 1) / 2 - i1;
+
+			int max1 = (i1 == 0) ? Integer.MIN_VALUE : a[ i1 - 1 ];
+			int max2 = (i2 == 0) ? Integer.MIN_VALUE : b[ i2 - 1 ];
+			int min1 = (i1 == n1) ? Integer.MAX_VALUE : a[ i1 ];
+			int min2 = (i2 == n2) ? Integer.MAX_VALUE : b[ i2 ];
+
+			if (max1 <= min2 && max2 <= min1) {
+				if ((n1 + n2) % 2 == 0)
+					return ((double) Math.max ( max1, max2 ) + (double) Math.min ( min1, min2 )) / 2;
+				else return Math.max ( max1, max2 );
+			} else if (max1 > min2) end = i1 - 1;
+			else begin = i1 + 1;
+		}
+		return -1;
+	}
+
 	// https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
 	// TODO: SUBMIT IN 2x BOOSTER
 	public int searchInRotatedSortedArray(int[] nums, int target) {
