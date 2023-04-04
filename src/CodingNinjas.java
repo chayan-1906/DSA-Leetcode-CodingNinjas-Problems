@@ -1856,12 +1856,21 @@ public class CodingNinjas {
 
 //		System.out.println ( squareRoot ( 111111 ) );   // 333
 
-        System.out.println(groupPhoto(new int[]{2, 1, 3, 1, 4})); // 7
-        System.out.println(groupPhoto(new int[]{3, 1, 2})); // 5
-        System.out.println(groupPhoto(new int[]{2, 7, 8, 1})); // 10
-        System.out.println(groupPhoto(new int[]{1, 1, 2, 1, 2, 1})); // 3
-        System.out.println(groupPhoto(new int[]{4, 1, 1, 4})); // 8
-        System.out.println(groupPhoto(new int[]{19, 16, 8, 7, 12, 19, 10})); // 38
+//        System.out.println(groupPhoto(new int[]{2, 1, 3, 1, 4})); // 7
+//        System.out.println(groupPhoto(new int[]{3, 1, 2})); // 5
+//        System.out.println(groupPhoto(new int[]{2, 7, 8, 1})); // 10
+//        System.out.println(groupPhoto(new int[]{1, 1, 2, 1, 2, 1})); // 3
+//        System.out.println(groupPhoto(new int[]{4, 1, 1, 4})); // 8
+//        System.out.println(groupPhoto(new int[]{19, 16, 8, 7, 12, 19, 10})); // 38
+
+        System.out.println(Arrays.toString(stockSpan(new int[]{13, 15, 12, 14, 16, 8, 6, 4, 10, 30}))); // 1 2 1 2 5 1 1 1 1 4 10
+        System.out.println(Arrays.toString(stockSpan(new int[]{10, 20, 30, 40})));  // 1 2 3 4
+        System.out.println(Arrays.toString(stockSpan(new int[]{40, 30, 20, 10})));  // 1 1 1 1
+        System.out.println(Arrays.toString(stockSpan(new int[]{30, 20, 25, 28, 27, 29})));  // 1 1 2 3 1 5
+        System.out.println(Arrays.toString(stockSpan(new int[]{18, 12, 13, 14, 11, 16})));  // 1 1 2 3 1 5
+        System.out.println(Arrays.toString(stockSpan(new int[]{60, 10, 20, 40, 35, 30, 50, 70, 65})));  // 1 1 2 3 1 1 6 8 1
+        System.out.println(Arrays.toString(stockSpan(new int[]{60, 70, 80, 100, 90, 75, 80, 120})));  // 1 2 3 4 1 1 2 8
+        System.out.println(Arrays.toString(stockSpan(new int[]{10, 10, 10, 10})));  // 1 1 1 1
     }
 
     public static int josephus(int n, int k) {
@@ -2307,6 +2316,22 @@ public class CodingNinjas {
             else begin = i1 + 1;
         }
         return -1;
+    }
+
+    // https://www.codingninjas.com/codestudio/problems/stock-span_99652
+    // TODO: SUBMIT IN 2x BOOSTER
+    public static int[] stockSpan(int[] price) {
+        Stack<Integer> stack = new Stack<>();
+        int[] result = new int[price.length];
+        Arrays.fill(result, 1);
+        for (int i = 1; i < price.length; i++) {
+            stack.push(i - 1);
+            while (!stack.isEmpty() && price[stack.peek()] < price[i]) stack.pop();
+            if (!stack.isEmpty()/* && price[stack.peek()] > price[i]*/)
+                result[i] = i - stack.peek();
+            else result[i] = i + 1;
+        }
+        return result;
     }
 
     // https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
