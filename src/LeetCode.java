@@ -677,4 +677,86 @@ public class LeetCode {
         }
         return result.toString();
     }
+
+    static class MyCircularQueue {
+
+        int front, rear, capacity, size;
+        int[] array;
+
+        public MyCircularQueue(int k) {
+            capacity = k;
+            size = 0;
+            front = 0;
+            rear = capacity - 1;
+            array = new int[capacity];
+        }
+
+        public boolean enQueue(int value) {
+            if (isFull()) return false;
+            rear = (rear + 1) % capacity;
+            array[rear] = value;
+            size++;
+            return true;
+        }
+
+        public boolean deQueue() {
+            if (isEmpty()) return false;
+            front = (front + 1) % capacity;
+            size--;
+            return true;
+        }
+
+        public int Front() {
+            return isEmpty() ? -1 : array[front];
+        }
+
+        public int Rear() {
+            return isFull() ? -1 : array[rear];
+        }
+
+        public boolean isEmpty() {
+            return size == 0;
+        }
+
+        public boolean isFull() {
+            return size == capacity;
+        }
+    }
+
+    static class MyQueue {
+
+        int currentSize;
+
+        Stack<Integer> stack1 = new Stack<>();
+
+        Stack<Integer> stack2 = new Stack<>();
+
+        public MyQueue() {
+            currentSize = 0;
+        }
+
+        public void push(int x) {
+            currentSize++;
+            stack1.push(x);
+        }
+
+        public int pop() {
+            currentSize--;
+            while (!stack1.empty()) stack2.push(stack1.pop());
+            int poppedData = stack2.pop();
+            while (!stack2.empty()) stack1.push(stack2.pop());
+            return poppedData;
+        }
+
+        public int peek() {
+            while (!stack1.empty()) stack2.push(stack1.pop());
+            int peekData = stack2.peek();
+            while (!stack2.empty()) stack1.push(stack2.pop());
+            return peekData;
+        }
+
+        public boolean empty() {
+            return currentSize == 0;
+        }
+    }
 }
