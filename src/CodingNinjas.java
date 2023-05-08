@@ -2361,4 +2361,96 @@ public class CodingNinjas {
          * left = 0, right = 1, mid = 2: 2 ≠ target
          */
     }
+
+    // https://www.codingninjas.com/codestudio/problems/queue-using-array-or-singly-linked-list_2099908
+    // TODO: SUBMIT IN 2x BOOSTER
+    class Queue {
+        int data;
+        Queue next;
+        Queue head;
+        Queue tail;
+
+        Queue() {
+            // Implement the Constructor
+            head = tail = null;
+        }
+
+        Queue(int data) {
+            this.data = data;
+            next = null;
+        }
+
+        /*----------------- Public Functions of Queue -----------------*/
+
+        boolean isEmpty() {
+            // Implement the isEmpty() function
+            return head == null;
+        }
+
+        void enqueue(int data) {
+            // Implement the enqueue() function
+            Queue newnode = new Queue(data);
+            if (head == null) {
+                head = tail = newnode;
+                return;
+            }
+            tail.next = newnode;
+            tail = newnode;
+        }
+
+        int dequeue() {
+            // Implement the dequeue() function
+            if (head == null) return -1;
+            int dequeuedData = head.data;
+            head = head.next;
+            if (head == null) tail = null;
+            return dequeuedData;
+        }
+
+        int front() {
+            // Implement the front() function
+            return head != null ? head.data : -1;
+        }
+    }
+
+    // https://www.codingninjas.com/codestudio/problems/circular-queue_1170058
+    // TODO: ASKED IN GFG CHAT
+    class CircularQueue {
+        int[] array;
+        int currentSize, capacity, front, rear;
+
+        // Initialize your data structure.
+        public CircularQueue(int n) {
+            capacity = n;
+            array = new int[capacity];
+            currentSize = 0;
+            front = 0;
+            rear = capacity - 1;
+        }
+
+        /*
+           Enqueues 'X' into the queue. Returns true if it gets pushed into the stack,
+           and false otherwise.
+        */
+        public boolean enqueue(int value) {
+            // Write your code here.
+            if (currentSize == capacity) return false;
+            array[(rear + 1) % capacity] = value;
+            currentSize++;
+            return true;
+        }
+
+        /*
+          Dequeues top element from queue. Returns -1 if the stack is empty, otherwise
+          returns the popped element.
+        */
+        public int dequeue() {
+            // Write you code here.
+            if (currentSize == 0) return -1;
+            int dequeuedData = array[front];
+            front = (front + 1) % capacity;
+            currentSize--;
+            return dequeuedData;
+        }
+    }
 }
