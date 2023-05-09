@@ -2334,6 +2334,28 @@ public class CodingNinjas {
         return result;
     }
 
+    // https://www.codingninjas.com/codestudio/problems/reversing-a-queue_982934
+    // TODO: SUBMIT IN 2x BOOSTER
+    public static java.util.Queue<Integer> reverseQueue(java.util.Queue<Integer> q) {
+        // Write your code here.
+        java.util.Stack<Integer> stack = new Stack<>();
+        while (!q.isEmpty()) stack.push(q.remove());
+        while (!stack.isEmpty()) q.add(stack.pop());
+        return q;
+    }
+
+    // https://www.codingninjas.com/codestudio/problems/reverse-first-k-elements-of-queue_982771
+    // TODO: SUBMIT IN 2x BOOSTER
+    public static java.util.Queue<Integer> reverseElements(java.util.Queue<Integer> q, int k) {
+        // Write your code here.
+        Stack<Integer> stack = new Stack<>();
+        java.util.Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < k; i++) stack.push(q.remove());
+        while (!stack.isEmpty()) queue.add(stack.pop());
+        while (!q.isEmpty()) queue.add(q.remove());
+        return queue;
+    }
+
     // https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
     // TODO: SUBMIT IN 2x BOOSTER
     public int searchInRotatedSortedArray(int[] nums, int target) {
@@ -2414,7 +2436,7 @@ public class CodingNinjas {
     }
 
     // https://www.codingninjas.com/codestudio/problems/circular-queue_1170058
-    // TODO: ASKED IN GFG CHAT
+    // TODO: SUBMIT IN 2x BOOSTER
     class CircularQueue {
         int[] array;
         int currentSize, capacity, front, rear;
@@ -2435,7 +2457,8 @@ public class CodingNinjas {
         public boolean enqueue(int value) {
             // Write your code here.
             if (currentSize == capacity) return false;
-            array[(rear + 1) % capacity] = value;
+            rear = (rear + 1) % capacity;
+            array[rear] = value;
             currentSize++;
             return true;
         }
@@ -2451,6 +2474,47 @@ public class CodingNinjas {
             front = (front + 1) % capacity;
             currentSize--;
             return dequeuedData;
+        }
+    }
+
+    // https://www.codingninjas.com/codestudio/problems/stack-using-queue_795152
+    // TODO: SUBMIT IN 2x BOOSTER
+    public class QueueUsingStack {
+        // Define the data members.
+        java.util.Queue<Integer> queue1 = new LinkedList<>();
+        java.util.Queue<Integer> queue2 = new LinkedList<>();
+
+        public QueueUsingStack() {
+            // Implement the Constructor.
+        }
+
+        /*----------------- Public Functions of Stack -----------------*/
+
+        public int getSize() {
+            // Implement the getSize() function.
+            return queue1.size();
+        }
+
+        public boolean isEmpty() {
+            // Implement the isEmpty() function.
+            return queue1.isEmpty();
+        }
+
+        public void push(int element) {
+            // Implement the push(element) function.
+            queue2.add(element);
+            while (!queue1.isEmpty()) queue2.add(queue1.remove());
+            while (!queue2.isEmpty()) queue1.add(queue2.remove());
+        }
+
+        public int pop() {
+            // Implement the pop() function.
+            return !isEmpty() ? queue1.remove() : -1;
+        }
+
+        public int top() {
+            // Implement the top() function.
+            return queue1 != null ? queue1.peek() : -1;
         }
     }
 }
