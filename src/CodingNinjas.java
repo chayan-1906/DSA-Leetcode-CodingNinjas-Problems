@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CodingNinjas {
 
@@ -2356,6 +2357,34 @@ public class CodingNinjas {
         return queue;
     }
 
+    // https://www.codingninjas.com/codestudio/problems/construct-a-binary-tree-from-preorder-and-inorder-traversal_920539
+    // TODO: SUBMIT IN 2x BOOSTER
+    public static TreeNode<Integer> buildBinaryTree(ArrayList<Integer> inorder, ArrayList<Integer> preorder) {
+        LinkedHashSet<Integer> inorderHashSet = new LinkedHashSet<>(inorder);
+        return constructTreePreorderInorder(inorderHashSet, preorder, 0, inorder.size(), new AtomicInteger(0));
+    }
+
+    public static TreeNode<Integer> constructTreePreorderInorder(
+            LinkedHashSet<Integer> inorderHashSet,
+            ArrayList<Integer> preorder,
+            int inorderStart,
+            int inorderEnd,
+            AtomicInteger preIndex) {
+        if (inorderStart > inorderEnd) return null;
+        TreeNode<Integer> root = new TreeNode<>(preorder.get(preIndex.getAndIncrement()));
+        int inIndex = -1;
+        for (Integer item : inorderHashSet) {
+            if (Objects.equals(item, root.data)) {
+                inIndex++;
+                break;
+            }
+            inIndex++;
+        }
+        root.left = constructTreePreorderInorder(inorderHashSet, preorder, inorderStart, inIndex - 1, preIndex);
+        root.right = constructTreePreorderInorder(inorderHashSet, preorder, inIndex + 1, inorderEnd, preIndex);
+        return root;
+    }
+
     // https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
     // TODO: SUBMIT IN 2x BOOSTER
     public int searchInRotatedSortedArray(int[] nums, int target) {
@@ -2479,12 +2508,12 @@ public class CodingNinjas {
 
     // https://www.codingninjas.com/codestudio/problems/stack-using-queue_795152
     // TODO: SUBMIT IN 2x BOOSTER
-    public class QueueUsingStack {
+    public class StackUsingQueue {
         // Define the data members.
         java.util.Queue<Integer> queue1 = new LinkedList<>();
         java.util.Queue<Integer> queue2 = new LinkedList<>();
 
-        public QueueUsingStack() {
+        public StackUsingQueue() {
             // Implement the Constructor.
         }
 
@@ -2515,6 +2544,40 @@ public class CodingNinjas {
         public int top() {
             // Implement the top() function.
             return queue1 != null ? queue1.peek() : -1;
+        }
+    }
+
+    // https://www.codingninjas.com/codestudio/problems/queue-using-stack_799482
+    // TODO: SUBMIT IN 2x BOOSTER
+    public class QueueUsingStack {
+        // Define the data members(if any) here.
+        java.util.Stack<Integer> stack1 = new Stack<>();
+        java.util.Stack<Integer> stack2 = new Stack<>();
+
+        QueueUsingStack() {
+            // Initialize your data structure here.
+        }
+
+        void enQueue(int val) {
+            // Implement the enqueue() function.
+            while (!stack1.isEmpty()) stack2.push(stack1.pop());
+            stack1.push(val);
+            while (!stack2.isEmpty()) stack1.push(stack2.pop());
+        }
+
+        int deQueue() {
+            // Implement the dequeue() function.
+            return stack1.isEmpty() ? -1 : stack1.pop();
+        }
+
+        int peek() {
+            // Implement the peek() function here.
+            return stack1.isEmpty() ? -1 : stack1.peek();
+        }
+
+        boolean isEmpty() {
+            // Implement the isEmpty() function here.
+            return stack1.isEmpty();
         }
     }
 }
