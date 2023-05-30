@@ -678,6 +678,20 @@ public class LeetCode {
         return result.toString();
     }
 
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) return true;
+        return heightDiff(root) != -1;
+    }
+
+    public int heightDiff(TreeNode root) {
+        if (root == null) return 0;
+        int lh = heightDiff(root.left);
+        if (lh == -1) return -1;
+        int rh = heightDiff(root.right);
+        if (rh == -1) return -1;
+        return Math.abs(lh - rh) > 1 ? -1 : Math.max(lh, rh) + 1;
+    }
+
     static class MyCircularQueue {
 
         int front, rear, capacity, size;

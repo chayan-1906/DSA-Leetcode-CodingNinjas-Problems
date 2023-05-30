@@ -2385,6 +2385,77 @@ public class CodingNinjas {
         return root;
     }
 
+    // https://www.codingninjas.com/codestudio/problems/level-order-traversal_796002
+    // TODO: SUBMIT IN 2x BOOSTER
+    public static ArrayList<Integer> getLevelOrder(BinaryTreeNode root) {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        if (root == null) return new ArrayList<>();
+        java.util.Queue<BinaryTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int count = queue.size();
+            for (int i = 0; i < count; i++) {
+                BinaryTreeNode current = queue.remove();
+                arrayList.add(current.data);
+                if (current.left != null) queue.add(current.left);
+                if (current.right != null) queue.add(current.right);
+            }
+        }
+        return arrayList;
+    }
+
+    // https://www.codingninjas.com/codestudio/problems/left-view-of-binary-tree_625707
+    // TODO: SUBMIT IN 2x BOOSTER
+    public static void leftView(TreeNode<Integer> root) {
+        if (root == null) return;
+        java.util.Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int count = queue.size();
+            for (int i = 0; i < count; i++) {
+                TreeNode current = queue.remove();
+                if (i == 0) System.out.print(current.data + " ");
+                if (current.left != null) queue.add(current.left);
+                if (current.right != null) queue.add(current.right);
+            }
+        }
+    }
+
+    // https://www.codingninjas.com/codestudio/problems/is-height-balanced-binary-tree_975497
+    // TODO: SUBMIT IN 2x BOOSTER
+    public static boolean isBalancedBT(BinaryTreeNode root) {
+        if (root == null) return true;
+        return height(root) != -1;
+    }
+
+    public static int height(BinaryTreeNode root) {
+        if (root == null) return 0;
+        int leftHeight = height(root.left);
+        if (leftHeight == -1) return -1;
+        int rightHeight = height(root.right);
+        if (rightHeight == -1) return -1;
+        return Math.abs(leftHeight - rightHeight) > 1 ? -1 : Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    // https://www.codingninjas.com/codestudio/problems/right-view_764605
+    // TODO: SUBMIT IN 2x BOOSTER
+    public static ArrayList<Integer> printRightView(BinaryTreeNode root) {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        if (root == null) return arrayList;
+        java.util.Queue<BinaryTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int count = queue.size();
+            for (int i = 0; i < count; i++) {
+                BinaryTreeNode current = queue.remove();
+                if (i == count - 1) arrayList.add(current.data);
+                if (current.left != null) queue.add(current.left);
+                if (current.right != null) queue.add(current.right);
+            }
+        }
+        return arrayList;
+    }
+
     // https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
     // TODO: SUBMIT IN 2x BOOSTER
     public int searchInRotatedSortedArray(int[] nums, int target) {
