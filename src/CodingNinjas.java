@@ -2041,8 +2041,6 @@ public class CodingNinjas {
         return false;
     }
 
-    // https://www.codingninjas.com/codestudio/problems/square-root-integral_624660
-    // TODO: SUBMIT IN 2x BOOSTER
     public static int squareRoot(int a) {
         int left = 0, right = a;
         int sqrt = -1;
@@ -2113,8 +2111,6 @@ public class CodingNinjas {
         return firstOccur == -1 && lastOccur == -1 ? 0 : lastOccur - firstOccur + 1;
     }
 
-    // https://www.codingninjas.com/codestudio/problems/first-unique-character-in-a-string_982933?topList=top-string-coding-interview-questions
-    // TODO: SUBMIT IN 2x BOOSTER
     public static int firstUniqueCharacter(String s) {
         HashMap<Character, ArrayList<Integer>> hashMap = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
@@ -2198,8 +2194,6 @@ public class CodingNinjas {
         return a[0] + a[a.length - 1];
     }
 
-    // https://www.codingninjas.com/codestudio/problems/search-the-element_1806887
-    // TODO: SUBMIT IN 2x BOOSTER
     public static int searchInRotatedSorted(int[] arr, int key) {
         int left = 0, right = arr.length - 1;
         while (left <= right) {
@@ -2221,7 +2215,7 @@ public class CodingNinjas {
     }
 
     // https://www.codingninjas.com/codestudio/problems/find-the-single-element_6680465
-    // TODO: SUBMIT IN 2x BOOSTER
+    // TODO: ASKED IN GFG CHAT
     public static int getSingleElement(int[] arr) {
         int left = 0, right = arr.length - 1;
         while (left <= right) {
@@ -2295,8 +2289,6 @@ public class CodingNinjas {
         return sqrt;
     }
 
-    // https://www.codingninjas.com/codestudio/problems/median-of-two-sorted-arrays_985294
-    // TODO: SUBMIT IN 2x BOOSTER
     public static double median(int[] a, int[] b) {
         int begin = 0, end = a.length;
         int n1 = a.length, n2 = b.length;
@@ -2404,8 +2396,6 @@ public class CodingNinjas {
         return arrayList;
     }
 
-    // https://www.codingninjas.com/codestudio/problems/left-view-of-binary-tree_625707
-    // TODO: SUBMIT IN 2x BOOSTER
     public static void leftView(TreeNode<Integer> root) {
         if (root == null) return;
         java.util.Queue<TreeNode> queue = new LinkedList<>();
@@ -2456,8 +2446,23 @@ public class CodingNinjas {
         return arrayList;
     }
 
-    // https://www.codingninjas.com/codestudio/problems/search-in-rotated-sorted-array_1082554
-    // TODO: SUBMIT IN 2x BOOSTER
+    static long nodeLevel(BinaryTreeNode root, int node) {
+        java.util.Queue<BinaryTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        long level = 1;
+        while (!queue.isEmpty()) {
+            int count = queue.size();
+            level++;
+            for (int i = 0; i < count; i++) {
+                BinaryTreeNode current = queue.remove();
+                if (Objects.equals(current.data, node)) return level;
+                if (current.left != null) queue.add(current.left);
+                if (current.right != null) queue.add(current.right);
+            }
+        }
+        return level;
+    }
+
     public int searchInRotatedSortedArray(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
         while (left <= right) {
@@ -2486,11 +2491,11 @@ public class CodingNinjas {
 
     // https://www.codingninjas.com/codestudio/problems/queue-using-array-or-singly-linked-list_2099908
     // TODO: SUBMIT IN 2x BOOSTER
-    class Queue {
+    static class Queue {
+        static Queue next;
+        static Queue head;
+        static Queue tail;
         int data;
-        Queue next;
-        Queue head;
-        Queue tail;
 
         Queue() {
             // Implement the Constructor
@@ -2516,7 +2521,7 @@ public class CodingNinjas {
                 head = tail = newnode;
                 return;
             }
-            tail.next = newnode;
+            next = newnode;
             tail = newnode;
         }
 
@@ -2524,7 +2529,7 @@ public class CodingNinjas {
             // Implement the dequeue() function
             if (head == null) return -1;
             int dequeuedData = head.data;
-            head = head.next;
+            head = next;
             if (head == null) tail = null;
             return dequeuedData;
         }

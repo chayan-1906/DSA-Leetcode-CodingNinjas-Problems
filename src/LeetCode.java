@@ -272,6 +272,42 @@ public class LeetCode {
 
 //		System.out.println ( reverseVowels ( "hello" ) );   // holle
 //		System.out.println ( reverseVowels ( "leetcode" ) );   // leotcede
+
+//        System.out.println(maxNumberOfBalloons("nlaebolko"));    // 1
+//        System.out.println(maxNumberOfBalloons("loonbalxballpoon"));    // 2
+//        System.out.println(maxNumberOfBalloons("leetcode"));    // 0
+
+        List<List<String>> paths = new ArrayList<>();
+        ArrayList<String> path1 = new ArrayList<>();
+        path1.add("jMgaf WaWA");    // key
+        path1.add("iinynVdmBz");    // value
+        ArrayList<String> path2 = new ArrayList<>();
+        path2.add(" QCrEFBcAw");    // key
+        path2.add("wRPRHznLWS");    // value
+        ArrayList<String> path3 = new ArrayList<>();
+        path3.add("iinynVdmBz");    // key
+        path3.add("OoLjlLFzjz");    // value
+        ArrayList<String> path4 = new ArrayList<>();
+        path4.add("OoLjlLFzjz");    // key
+        path4.add(" QCrEFBcAw");    // value
+        ArrayList<String> path5 = new ArrayList<>();
+        path5.add("IhxjNbDeXk");    // key
+        path5.add("jMgaf WaWA");    // value
+        ArrayList<String> path6 = new ArrayList<>();
+        path6.add("jmuAYy vgz");    // key
+        path6.add("IhxjNbDeXk");    // value
+        paths.add(path1);
+        paths.add(path2);
+        paths.add(path3);
+        paths.add(path4);
+        paths.add(path5);
+        paths.add(path6);
+        System.out.println(destCity(paths));
+        /**
+         * jMgaf WaWA --> iinynVdmBz --> OoLjlLFzjz --> QCrEFBcAw --> wRPRHznLWS
+         * while hashmap.containsKey(value)
+         *      array.add(value);
+         */
     }
 
     public static int subarraySum(int[] nums, int k) {
@@ -504,6 +540,54 @@ public class LeetCode {
             else left1 = i1 + 1;
         }
         return -1;
+    }
+
+    public static int maxNumberOfBalloons(String text) {
+        HashMap<Character, Integer> hashMap = new HashMap<>();
+        int balloonCount = 0;
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            if (ch == 'b' || ch == 'a' || ch == 'l' || ch == 'o' || ch == 'n')
+                hashMap.put(text.charAt(i), hashMap.getOrDefault(text.charAt(i), 0) + 1);
+        }
+        while (isValidBalloon(hashMap)) {
+            balloonCount++;
+            hashMap.put('b', hashMap.get('b') - 1);
+            hashMap.put('a', hashMap.get('a') - 1);
+            hashMap.put('n', hashMap.get('n') - 1);
+            hashMap.put('o', hashMap.get('o') - 2);
+            hashMap.put('l', hashMap.get('l') - 2);
+        }
+        return balloonCount;
+        /**
+         * balloon
+         * valid = 1a, 1b, 1n, 2l, 2o
+         */
+    }
+
+    public static boolean isValidBalloon(HashMap<Character, Integer> hashMap) {
+        boolean isValid = false;
+        if (hashMap.containsKey('b') && hashMap.containsKey('a')
+                && hashMap.containsKey('n') && hashMap.containsKey('l') && hashMap.containsKey('o')) {
+            isValid = hashMap.get('b') >= 1 && hashMap.get('a') >= 1
+                    && hashMap.get('l') >= 2 && hashMap.get('o') >= 2 && hashMap.get('n') >= 1;
+        }
+        return isValid;
+    }
+
+    public static String destCity(List<List<String>> paths) {
+        System.out.println(paths);
+        LinkedHashMap<String, String> hashMap = new LinkedHashMap<>();
+        for (int i = 0; i < paths.size(); i++)
+            hashMap.put(paths.get(i).get(0), paths.get(i).get(1));
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add(paths.get(0).get(0));
+        String value = paths.get(0).get(1);
+        while (hashMap.containsKey(value)) {
+            value = hashMap.get(value);
+            arrayList.add(value);
+        }
+        return arrayList.size() == 1 ? paths.get(0).get(1) : arrayList.get(arrayList.size() - 1);
     }
 
     public boolean kLengthApart(int[] nums, int k) {
