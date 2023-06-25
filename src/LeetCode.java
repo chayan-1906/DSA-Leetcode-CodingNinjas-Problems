@@ -776,6 +776,47 @@ public class LeetCode {
         return Math.abs(lh - rh) > 1 ? -1 : Math.max(lh, rh) + 1;
     }
 
+    public int maxLengthBetweenEqualCharacters(String s) {
+        int maxLength = -1;
+        HashMap<Character, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (hashMap.containsKey(s.charAt(i))) {
+                maxLength = Math.max(maxLength, i - hashMap.get(s.charAt(i)) - 1);
+            } else {
+                hashMap.put(s.charAt(i), i);
+            }
+        }
+        return maxLength;
+    }
+
+    public boolean checkIfPangram(String sentence) {
+        HashSet<Character> hashSet = new HashSet<>();
+        for (int i = 0; i < sentence.length(); i++) {
+            hashSet.add(sentence.charAt(i));
+        }
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            if (!hashSet.contains(ch)) return false;
+        }
+        return true;
+    }
+
+    public List<Integer> twoOutOfThree(int[] nums1, int[] nums2, int[] nums3) {
+        HashSet<Integer> hashSet1 = new HashSet<>();
+        HashSet<Integer> hashSet2 = new HashSet<>();
+        HashSet<Integer> hashSet3 = new HashSet<>();
+        HashSet<Integer> ans = new HashSet<>();
+        for (int x : nums1) hashSet1.add(x);
+        for (int x : nums2) hashSet2.add(x);
+        for (int x : nums3) hashSet3.add(x);
+        for (int x : hashSet1) {
+            if (hashSet2.contains(x) || hashSet3.contains(x)) ans.add(x);
+        }
+        for (int x : hashSet2) {
+            if (hashSet3.contains(x)) ans.add(x);
+        }
+        return new ArrayList<>(ans);
+    }
+
     static class MyCircularQueue {
 
         int front, rear, capacity, size;

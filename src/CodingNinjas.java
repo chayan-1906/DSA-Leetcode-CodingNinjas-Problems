@@ -2232,7 +2232,6 @@ public class CodingNinjas {
         return -1;
     }
 
-    // https://www.codingninjas.com/codestudio/problems/allocate-books_1090540
     // https://www.codingninjas.com/codestudio/problems/allocate-books_1089560
     // TODO: SUBMIT IN 2x BOOSTER
     public static int allocateBooks(ArrayList<Integer> arr, int n, int m) {
@@ -2264,8 +2263,6 @@ public class CodingNinjas {
         return requiredStudents <= m;
     }
 
-    // https://www.codingninjas.com/codestudio/problems/square-root-decimal_1095655
-    // TODO: SUBMIT IN 2x BOOSTER
     public static double squareRootDecimal(long n, int precision) {
         long low = 0, high = n;
         double sqrt = 0;
@@ -2489,8 +2486,6 @@ public class CodingNinjas {
          */
     }
 
-    // https://www.codingninjas.com/codestudio/problems/queue-using-array-or-singly-linked-list_2099908
-    // TODO: SUBMIT IN 2x BOOSTER
     static class Queue {
         static Queue next;
         static Queue head;
