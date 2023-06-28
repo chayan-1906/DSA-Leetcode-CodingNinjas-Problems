@@ -2334,8 +2334,6 @@ public class CodingNinjas {
         return q;
     }
 
-    // https://www.codingninjas.com/codestudio/problems/reverse-first-k-elements-of-queue_982771
-    // TODO: SUBMIT IN 2x BOOSTER
     public static java.util.Queue<Integer> reverseElements(java.util.Queue<Integer> q, int k) {
         // Write your code here.
         Stack<Integer> stack = new Stack<>();
@@ -2577,8 +2575,6 @@ public class CodingNinjas {
         }
     }
 
-    // https://www.codingninjas.com/codestudio/problems/stack-using-queue_795152
-    // TODO: SUBMIT IN 2x BOOSTER
     public class StackUsingQueue {
         // Define the data members.
         java.util.Queue<Integer> queue1 = new LinkedList<>();
@@ -2614,7 +2610,7 @@ public class CodingNinjas {
 
         public int top() {
             // Implement the top() function.
-            return queue1 != null ? queue1.peek() : -1;
+            return queue1 != null && !queue1.isEmpty() ? queue1.peek() : -1;
         }
     }
 

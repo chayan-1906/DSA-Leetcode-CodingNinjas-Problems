@@ -277,37 +277,38 @@ public class LeetCode {
 //        System.out.println(maxNumberOfBalloons("loonbalxballpoon"));    // 2
 //        System.out.println(maxNumberOfBalloons("leetcode"));    // 0
 
-        List<List<String>> paths = new ArrayList<>();
-        ArrayList<String> path1 = new ArrayList<>();
-        path1.add("jMgaf WaWA");    // key
-        path1.add("iinynVdmBz");    // value
-        ArrayList<String> path2 = new ArrayList<>();
-        path2.add(" QCrEFBcAw");    // key
-        path2.add("wRPRHznLWS");    // value
-        ArrayList<String> path3 = new ArrayList<>();
-        path3.add("iinynVdmBz");    // key
-        path3.add("OoLjlLFzjz");    // value
-        ArrayList<String> path4 = new ArrayList<>();
-        path4.add("OoLjlLFzjz");    // key
-        path4.add(" QCrEFBcAw");    // value
-        ArrayList<String> path5 = new ArrayList<>();
-        path5.add("IhxjNbDeXk");    // key
-        path5.add("jMgaf WaWA");    // value
-        ArrayList<String> path6 = new ArrayList<>();
-        path6.add("jmuAYy vgz");    // key
-        path6.add("IhxjNbDeXk");    // value
-        paths.add(path1);
-        paths.add(path2);
-        paths.add(path3);
-        paths.add(path4);
-        paths.add(path5);
-        paths.add(path6);
-        System.out.println(destCity(paths));
+//        List<List<String>> paths = new ArrayList<>();
+//        ArrayList<String> path1 = new ArrayList<>();
+//        path1.add("jMgaf WaWA");    // key
+//        path1.add("iinynVdmBz");    // value
+//        ArrayList<String> path2 = new ArrayList<>();
+//        path2.add(" QCrEFBcAw");    // key
+//        path2.add("wRPRHznLWS");    // value
+//        ArrayList<String> path3 = new ArrayList<>();
+//        path3.add("iinynVdmBz");    // key
+//        path3.add("OoLjlLFzjz");    // value
+//        ArrayList<String> path4 = new ArrayList<>();
+//        path4.add("OoLjlLFzjz");    // key
+//        path4.add(" QCrEFBcAw");    // value
+//        ArrayList<String> path5 = new ArrayList<>();
+//        path5.add("IhxjNbDeXk");    // key
+//        path5.add("jMgaf WaWA");    // value
+//        ArrayList<String> path6 = new ArrayList<>();
+//        path6.add("jmuAYy vgz");    // key
+//        path6.add("IhxjNbDeXk");    // value
+//        paths.add(path1);
+//        paths.add(path2);
+//        paths.add(path3);
+//        paths.add(path4);
+//        paths.add(path5);
+//        paths.add(path6);
+//        System.out.println(destCity(paths));
         /**
          * jMgaf WaWA --> iinynVdmBz --> OoLjlLFzjz --> QCrEFBcAw --> wRPRHznLWS
          * while hashmap.containsKey(value)
          *      array.add(value);
          */
+
     }
 
     public static int subarraySum(int[] nums, int k) {
@@ -590,6 +591,27 @@ public class LeetCode {
         return arrayList.size() == 1 ? paths.get(0).get(1) : arrayList.get(arrayList.size() - 1);
     }
 
+    public static int findNonMinOrMax(int[] nums) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int minIndex = -1;
+        int maxIndex = -1;
+        for (int i = 0; i < nums.length; i++) {
+            if (min > nums[i]) {
+                min = nums[i];
+                minIndex = i;
+            }
+            if (max < nums[i]) {
+                max = nums[i];
+                maxIndex = i;
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (i != minIndex && i != maxIndex) return nums[i];
+        }
+        return -1;
+    }
+
     public boolean kLengthApart(int[] nums, int k) {
         ArrayList<Integer> arrayList = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) if (nums[i] == 1) arrayList.add(i);
@@ -815,6 +837,62 @@ public class LeetCode {
             if (hashSet3.contains(x)) ans.add(x);
         }
         return new ArrayList<>(ans);
+    }
+
+    public int numIdenticalPairs(int[] nums) {
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (hashMap.containsKey(num)) {
+                hashMap.put(num, hashMap.get(num) + 1);
+                count += hashMap.get(num);
+            } else {
+                hashMap.put(num, 1);
+            }
+        }
+        return count;
+    }
+
+    public int firstBadVersion(int n) {
+        int low = 1, high = n, firstBad = -1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (isBadVersion(mid)) {
+                high = mid - 1;
+                firstBad = mid;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return firstBad;
+    }
+
+    private boolean isBadVersion(int mid) {
+        return false;
+    }
+
+    // https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/
+    // TODO: ASKED IN GFG CHAT
+    public boolean search(int[] nums, int target) {
+        if (nums.length == 1) return nums[0] == target;
+        int low = 1, high = nums.length - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (nums[mid] == target) return true;
+            else if (nums[low] < nums[mid]) {
+                // left half sorted
+                if (nums[low] <= target && target < nums[mid]) high = mid - 1;
+                else if (nums[low] == target) return true;
+                else low = mid + 1;
+            } else {
+                // right half sorted
+                if (nums[mid] < target && target <= nums[high]) low = mid + 1;
+                else if (nums[high] == target) return true;
+                else high = mid - 1;
+            }
+        }
+        return false;
     }
 
     static class MyCircularQueue {
