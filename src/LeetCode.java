@@ -309,6 +309,9 @@ public class LeetCode {
          *      array.add(value);
          */
 
+//        System.out.println(minLength("ABFCACDB"));  // 2
+//        System.out.println(minLength("ACBBD"));  // 5
+        System.out.println(removeTrailingZeros("51230100"));    // 512301
     }
 
     public static int subarraySum(int[] nums, int k) {
@@ -610,6 +613,27 @@ public class LeetCode {
             if (i != minIndex && i != maxIndex) return nums[i];
         }
         return -1;
+    }
+
+    public static int minLength(String s) {
+        System.out.println("main string: " + s);
+        while (s.contains("AB") || s.contains("CD")) {
+            s = s.replaceAll("AB", "");
+            System.out.println("Deleting AB: " + s);
+            s = s.replaceAll("CD", "");
+            System.out.println("Deleting CD: " + s);
+        }
+        return s.length();
+    }
+
+    public static String removeTrailingZeros(String num) {
+        int index = num.length();
+        for (int i = num.length() - 1; i >= 0; i--) {
+            if (num.charAt(i) == '0') {
+                index = i;
+            } else break;
+        }
+        return index == num.length() ? num : num.substring(0, index);
     }
 
     public boolean kLengthApart(int[] nums, int k) {

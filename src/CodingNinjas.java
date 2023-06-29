@@ -2344,8 +2344,6 @@ public class CodingNinjas {
         return queue;
     }
 
-    // https://www.codingninjas.com/codestudio/problems/construct-a-binary-tree-from-preorder-and-inorder-traversal_920539
-    // TODO: SUBMIT IN 2x BOOSTER
     public static TreeNode<Integer> buildBinaryTree(ArrayList<Integer> inorder, ArrayList<Integer> preorder) {
         LinkedHashSet<Integer> inorderHashSet = new LinkedHashSet<>(inorder);
         return constructTreePreorderInorder(inorderHashSet, preorder, 0, inorder.size(), new AtomicInteger(0));
@@ -2614,8 +2612,6 @@ public class CodingNinjas {
         }
     }
 
-    // https://www.codingninjas.com/codestudio/problems/queue-using-stack_799482
-    // TODO: SUBMIT IN 2x BOOSTER
     public class QueueUsingStack {
         // Define the data members(if any) here.
         java.util.Stack<Integer> stack1 = new Stack<>();
