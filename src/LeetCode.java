@@ -311,7 +311,27 @@ public class LeetCode {
 
 //        System.out.println(minLength("ABFCACDB"));  // 2
 //        System.out.println(minLength("ACBBD"));  // 5
-        System.out.println(removeTrailingZeros("51230100"));    // 512301
+//        System.out.println(removeTrailingZeros("51230100"));    // 512301
+
+//        System.out.println(wordPattern("abba", "dog cat cat dog")); // true
+//        System.out.println(wordPattern("abba", "dog cat cat fish"));    // false
+//        System.out.println(wordPattern("aaaa", "dog cat cat dog")); // false
+//        System.out.println(wordPattern("abba", "dog dog dog dog")); // true
+
+//        System.out.println(detectCapitalUse("FlaG"));   // false
+//        System.out.println(detectCapitalUse("Leetcode"));   // true
+//        System.out.println(detectCapitalUse("Google"));   // true
+//        System.out.println(detectCapitalUse("USA"));   // true
+
+//        System.out.println(capitalizeTitle("capiTalIze tHe titLe"));    // Capitalize The Title
+//        System.out.println(capitalizeTitle("First leTTeR OF EACH Word"));    // First Letter of Each Word
+//        System.out.println(capitalizeTitle("i lOve leetcode"));    // i Love Leetcode
+
+//        System.out.println(Arrays.deepToString(generateMatrixSpirally(3)));
+//        System.out.println(Arrays.deepToString(generateMatrixSpirally(2)));
+
+        System.out.println(Arrays.deepToString(transpose(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})));
+        System.out.println(Arrays.deepToString(transpose(new int[][]{{1, 2, 3}, {4, 5, 6}})));
     }
 
     public static int subarraySum(int[] nums, int k) {
@@ -636,6 +656,125 @@ public class LeetCode {
         return index == num.length() ? num : num.substring(0, index);
     }
 
+    public static boolean wordPattern(String pattern, String s) {
+        if (s.split(" ").length != pattern.length()) return false;
+        HashMap<Character, String> hashMap = new HashMap<>();
+        for (int i = 0; i < pattern.length(); i++) {
+            Character ch = pattern.charAt(i);
+            String word = s.split(" ")[i];
+            if (hashMap.containsKey(ch)) {
+                if (!Objects.equals(hashMap.get(ch), word)) return false;
+            } else {
+                if (hashMap.containsValue(word)) return false;
+                hashMap.put(ch, word);
+            }
+        }
+        System.out.println("hashMap - " + hashMap);
+        return true;
+    }
+
+    public static int[] findErrorNums(int[] nums) {
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        int[] result = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (hashMap.containsKey(num)) result[0] = num;
+            else hashMap.put(num, 1);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (!hashMap.containsKey(i + 1)) result[1] = i + 1;
+        }
+        return result;
+    }
+
+    public static boolean detectCapitalUse(String word) {
+        boolean isFirstLetterCapital = false;
+        boolean isAllCapital = true;
+        boolean isAllSmall = true;
+        if (word.charAt(0) >= 'A' && word.charAt(0) <= 'Z') isFirstLetterCapital = true;
+        for (int i = 1; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            if (ch >= 'a' && ch <= 'z') isAllCapital = false;
+            if (ch >= 'A' && ch <= 'Z') isAllSmall = false;
+
+//            System.out.println("ch : " + ch + " isFirstLetterCapital : " + isFirstLetterCapital);
+//            System.out.println("ch : " + ch + " isAllSmall : " + isAllSmall);
+//            System.out.println("ch : " + ch + " isAllCapital : " + isAllCapital + "\n");
+        }
+        return (isFirstLetterCapital && isAllCapital)
+                || isAllSmall;
+    }
+
+    public static String capitalizeTitle(String title) {
+        String[] words = title.split(" ");
+        StringBuilder titleBuilder = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            if (word.length() <= 2) {
+                words[i] = word.toLowerCase();
+            } else {
+                words[i] = word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+            }
+            if (i < words.length - 1) titleBuilder.append(words[i]).append(" ");
+        }
+        titleBuilder.append(words[words.length - 1]);
+        title = titleBuilder.toString();
+        return title;
+    }
+
+    static int[][] generateMatrixSpirally(int n) {
+        int[][] spiralMatrix = new int[n][n];
+        int number = 1;
+        int lowR = 0, highR = n - 1;
+        int lowC = 0, highC = n - 1;
+        for (int i = 0; i < n; i++) {
+            // first row : left -> right
+            for (int j = lowC; j <= highC; j++) spiralMatrix[lowR][j] = number++;
+            lowR++;
+
+            // last col : top -> bottom
+            for (int j = lowR; j <= highR; j++) spiralMatrix[j][highC] = number++;
+            highC--;
+
+            // last row : right -> left
+            if (lowR <= highR) {
+                for (int j = highC; j >= lowC; j--) spiralMatrix[highR][j] = number++;
+                highR--;
+            }
+
+            // first col : bottom -> top
+            if (lowC <= highC) {
+                for (int j = highR; j >= lowR; j--) spiralMatrix[j][lowC] = number++;
+                lowC++;
+            }
+        }
+        return spiralMatrix;
+    }
+
+    static int[][] transpose(int[][] matrix) {
+        int R = matrix.length;
+        int C = matrix[0].length;
+        int[][] transposeMat = new int[C][R];
+        // only for square matrix
+        /*for (int i = 0; i < R; i++) {
+            for (int j = i; j < C; j++) matrixEleSwap(matrix, i, j);
+        }*/
+
+        for (int i = 0; i < C; i++) {
+            for (int j = 0; j < R; j++) {
+                transposeMat[i][j] = matrix[j][i];
+            }
+        }
+
+        return transposeMat;
+    }
+
+    static void matrixEleSwap(int[][] matrix, int i, int j, int[][] transposeMat) {
+        int temp = matrix[i][j];
+        matrix[i][j] = transposeMat[j][i];
+        transposeMat[j][i] = temp;
+    }
+
     public boolean kLengthApart(int[] nums, int k) {
         ArrayList<Integer> arrayList = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) if (nums[i] == 1) arrayList.add(i);
@@ -896,8 +1035,6 @@ public class LeetCode {
         return false;
     }
 
-    // https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/
-    // TODO: ASKED IN GFG CHAT
     public boolean search(int[] nums, int target) {
         if (nums.length == 1) return nums[0] == target;
         int low = 1, high = nums.length - 1;
@@ -910,13 +1047,32 @@ public class LeetCode {
                 else if (nums[low] == target) return true;
                 else low = mid + 1;
             } else {
-                // right half sorted
-                if (nums[mid] < target && target <= nums[high]) low = mid + 1;
-                else if (nums[high] == target) return true;
-                else high = mid - 1;
+                if (nums[low] > nums[mid]) {
+                    // right half sorted
+                    if (nums[mid] < target && target <= nums[high]) low = mid + 1;
+                    else if (nums[high] == target) return true;
+                    else high = mid - 1;
+                } else {
+                    if (nums[low] == target) return true;
+                    low++;
+                }
             }
         }
         return false;
+    }
+
+    public int reachNumber(int target) {
+        target = Math.abs(target);
+        int step = 0, sum = 0;
+        while (sum < target) {
+            step++;
+            sum += step;
+        }
+        while ((sum - target) % 2 != 0) {
+            step++;
+            sum += step;
+        }
+        return step;
     }
 
     static class MyCircularQueue {

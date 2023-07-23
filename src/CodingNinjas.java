@@ -1654,24 +1654,24 @@ public class CodingNinjas {
 
     public static void main(String[] args) {
         ArrayList<Integer> arrayList1 = new ArrayList<>();
-        arrayList1.add(1);
-        arrayList1.add(0);
-        arrayList1.add(0);
-        arrayList1.add(2);
+        arrayList1.add(4);
+        arrayList1.add(10);
         arrayList1.add(3);
-        arrayList1.add(0);
+        arrayList1.add(5);
+        arrayList1.add(1);
 
         ArrayList<Integer> arrayList2 = new ArrayList<>();
+        arrayList2.add(1);
+        arrayList2.add(3);
+        arrayList2.add(5);
+        arrayList2.add(4);
+        arrayList2.add(6);
+        arrayList2.add(13);
+        arrayList2.add(10);
         arrayList2.add(9);
-        arrayList2.add(9);
-        arrayList2.add(9);
-        arrayList2.add(9);
-        arrayList2.add(9);
-        arrayList2.add(9);
-        arrayList2.add(9);
-        arrayList2.add(9);
-        arrayList2.add(9);
-        arrayList2.add(9);
+        arrayList2.add(8);
+        arrayList2.add(15);
+        arrayList2.add(17);
 
         Stack<Integer> stack = new Stack<>();
         stack.push(5);
@@ -1864,14 +1864,26 @@ public class CodingNinjas {
 //        System.out.println(groupPhoto(new int[]{4, 1, 1, 4})); // 8
 //        System.out.println(groupPhoto(new int[]{19, 16, 8, 7, 12, 19, 10})); // 38
 
-        System.out.println(Arrays.toString(stockSpan(new int[]{13, 15, 12, 14, 16, 8, 6, 4, 10, 30}))); // 1 2 1 2 5 1 1 1 1 4 10
-        System.out.println(Arrays.toString(stockSpan(new int[]{10, 20, 30, 40})));  // 1 2 3 4
-        System.out.println(Arrays.toString(stockSpan(new int[]{40, 30, 20, 10})));  // 1 1 1 1
-        System.out.println(Arrays.toString(stockSpan(new int[]{30, 20, 25, 28, 27, 29})));  // 1 1 2 3 1 5
-        System.out.println(Arrays.toString(stockSpan(new int[]{18, 12, 13, 14, 11, 16})));  // 1 1 2 3 1 5
-        System.out.println(Arrays.toString(stockSpan(new int[]{60, 10, 20, 40, 35, 30, 50, 70, 65})));  // 1 1 2 3 1 1 6 8 1
-        System.out.println(Arrays.toString(stockSpan(new int[]{60, 70, 80, 100, 90, 75, 80, 120})));  // 1 2 3 4 1 1 2 8
-        System.out.println(Arrays.toString(stockSpan(new int[]{10, 10, 10, 10})));  // 1 1 1 1
+//        System.out.println(Arrays.toString(stockSpan(new int[]{13, 15, 12, 14, 16, 8, 6, 4, 10, 30}))); // 1 2 1 2 5 1 1 1 1 4 10
+//        System.out.println(Arrays.toString(stockSpan(new int[]{10, 20, 30, 40})));  // 1 2 3 4
+//        System.out.println(Arrays.toString(stockSpan(new int[]{40, 30, 20, 10})));  // 1 1 1 1
+//        System.out.println(Arrays.toString(stockSpan(new int[]{30, 20, 25, 28, 27, 29})));  // 1 1 2 3 1 5
+//        System.out.println(Arrays.toString(stockSpan(new int[]{18, 12, 13, 14, 11, 16})));  // 1 1 2 3 1 5
+//        System.out.println(Arrays.toString(stockSpan(new int[]{60, 10, 20, 40, 35, 30, 50, 70, 65})));  // 1 1 2 3 1 1 6 8 1
+//        System.out.println(Arrays.toString(stockSpan(new int[]{60, 70, 80, 100, 90, 75, 80, 120})));  // 1 2 3 4 1 1 2 8
+//        System.out.println(Arrays.toString(stockSpan(new int[]{10, 10, 10, 10})));  // 1 1 1 1
+
+//        System.out.println(Arrays.toString(buildMinHeap(new int[]{9, 3, 2, 6, 7})));    // 2, 3, 9, 6, 7
+//        System.out.println(Arrays.toString(buildMinHeap(new int[]{1, 3, 2, 4})));    // 1, 3, 2, 4
+//        System.out.println(Arrays.toString(buildMinHeap(new int[]{1, 3, 5, 4, 6})));    // 1, 3, 5, 4, 6
+//        System.out.println(Arrays.toString(buildMinHeap(new int[]{8, 9, 0})));  // 0 9 8
+
+//        System.out.println(buildHeap(arrayList1, arrayList1.size()));
+//        System.out.println(buildHeap(arrayList2, arrayList2.size()));
+
+        System.out.println(MinToMaxHeap(6, new int[]{1, 2, 3, 6, 7, 8}));   // 8, 7, 3, 6, 2, 1
+        System.out.println(MinToMaxHeap(6, new int[]{1, 2, 3, 4, 5, 6}));   // 6, 5, 4, 2, 3, 1
+        System.out.println(MinToMaxHeap(6, new int[]{3, 5, 6, 7, 9, 12, 7}));
     }
 
     public static int josephus(int n, int k) {
@@ -2454,6 +2466,85 @@ public class CodingNinjas {
             }
         }
         return level;
+    }
+
+    static int[] buildMinHeap(int[] heap) {
+        for (int i = heap.length / 2 - 1; i >= 0; i--) minHeapify(heap, i);
+        return heap;
+    }
+
+    static void minHeapify(int[] heap, int i) {
+        int left = leftChild(i);
+        int right = rightChild(i);
+        int smallest = i;
+        if (left < heap.length && heap[left] < heap[smallest]) smallest = left;
+        if (right < heap.length && heap[right] < heap[smallest]) smallest = right;
+        if (smallest != i) {
+            swap(heap, i, smallest);
+            minHeapify(heap, smallest);
+        }
+    }
+
+    static void swapHeap(int[] arr, int i, int smallest) {
+        int temp = arr[i];
+        arr[i] = arr[smallest];
+        arr[smallest] = temp;
+    }
+
+    static int parent(int i) {
+        return (i - 1) / 2;
+    }
+
+    static int leftChild(int i) {
+        return 2 * i + 1;
+    }
+
+    static int rightChild(int i) {
+        return 2 * i + 2;
+    }
+
+    static ArrayList<Integer> buildHeap(ArrayList<Integer> arrayList, int n) {
+        for (int i = (n - 1) / 2; i >= 0; i--) {
+            maxHeapify(arrayList, i);
+        }
+        return arrayList;
+    }
+
+    static void maxHeapify(ArrayList<Integer> arrayList, int i) {
+        int left = leftChild(i);
+        int right = rightChild(i);
+        int largest = i;
+        if (left < arrayList.size() && arrayList.get(left) > arrayList.get(largest)) largest = left;
+        if (right < arrayList.size() && arrayList.get(right) > arrayList.get(largest)) largest = right;
+        if (largest != i) {
+            swapArrayList(arrayList, i, largest);
+            maxHeapify(arrayList, largest);
+        }
+    }
+
+    static void swapArrayList(ArrayList<Integer> arrayList, int i, int j) {
+        int temp = arrayList.get(i);
+        arrayList.set(i, arrayList.get(j));
+        arrayList.set(j, temp);
+    }
+
+    static ArrayList<Integer> MinToMaxHeap(int n, int[] arr) {
+        for (int i = (arr.length - 1) / 2; i >= 0; i--) maxHeapifyFromArray(arr, i);
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for (int j : arr) arrayList.add(j);
+        return arrayList;
+    }
+
+    static void maxHeapifyFromArray(int[] arr, int i) {
+        int left = leftChild(i);
+        int right = rightChild(i);
+        int largest = i;
+        if (left < arr.length && arr[left] > arr[largest]) largest = left;
+        if (right < arr.length && arr[right] > arr[largest]) largest = right;
+        if (largest != i) {
+            swapHeap(arr, i, largest);
+            maxHeapifyFromArray(arr, largest);
+        }
     }
 
     public int searchInRotatedSortedArray(int[] nums, int target) {
