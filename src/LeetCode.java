@@ -1075,6 +1075,30 @@ public class LeetCode {
         return step;
     }
 
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int pointerM = m - 1;
+        int pointerN = n - 1;
+        int pointerMerged = m + n - 1;
+
+        // reverse direction
+        while (pointerM >= 0 && pointerN >= 0) {
+            if (nums1[pointerM] > nums2[pointerN]) {
+                nums1[pointerMerged] = nums1[pointerM];
+                pointerM--;
+            } else {
+                nums1[pointerMerged] = nums2[pointerN];
+                pointerN--;
+            }
+            pointerMerged--;
+        }
+
+        while (pointerN >= 0) {
+            nums1[pointerMerged] = nums2[pointerN];
+            pointerN--;
+            pointerMerged--;
+        }
+    }
+
     static class MyCircularQueue {
 
         int front, rear, capacity, size;

@@ -1681,11 +1681,11 @@ public class CodingNinjas {
         stack.push(3);
 
         ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(1);
-        arrayList.add(2);
+        arrayList.add(5);
+        arrayList.add(-2);
         arrayList.add(3);
-//		arrayList.add ( 4 );
-//		arrayList.add ( 5 );
+        arrayList.add(-1);
+        arrayList.add(8);
 
         Node head = new Node(2);
 //		head.next = head;
@@ -1881,9 +1881,11 @@ public class CodingNinjas {
 //        System.out.println(buildHeap(arrayList1, arrayList1.size()));
 //        System.out.println(buildHeap(arrayList2, arrayList2.size()));
 
-        System.out.println(MinToMaxHeap(6, new int[]{1, 2, 3, 6, 7, 8}));   // 8, 7, 3, 6, 2, 1
-        System.out.println(MinToMaxHeap(6, new int[]{1, 2, 3, 4, 5, 6}));   // 6, 5, 4, 2, 3, 1
-        System.out.println(MinToMaxHeap(6, new int[]{3, 5, 6, 7, 9, 12, 7}));
+//        System.out.println(MinToMaxHeap(6, new int[]{1, 2, 3, 6, 7, 8}));   // 8, 7, 3, 6, 2, 1
+//        System.out.println(MinToMaxHeap(6, new int[]{1, 2, 3, 4, 5, 6}));   // 6, 5, 4, 2, 3, 1
+//        System.out.println(MinToMaxHeap(6, new int[]{3, 5, 6, 7, 9, 12, 7}));
+
+//        System.out.println(heapSort(arrayList, arrayList.size()));
     }
 
     public static int josephus(int n, int k) {
@@ -2504,21 +2506,20 @@ public class CodingNinjas {
     }
 
     static ArrayList<Integer> buildHeap(ArrayList<Integer> arrayList, int n) {
-        for (int i = (n - 1) / 2; i >= 0; i--) {
-            maxHeapify(arrayList, i);
-        }
+        for (int i = (n - 1) / 2; i >= 0; i--)
+            maxHeapify(arrayList, arrayList.size(), i);
         return arrayList;
     }
 
-    static void maxHeapify(ArrayList<Integer> arrayList, int i) {
+    static void maxHeapify(ArrayList<Integer> arrayList, int n, int i) {
         int left = leftChild(i);
         int right = rightChild(i);
         int largest = i;
-        if (left < arrayList.size() && arrayList.get(left) > arrayList.get(largest)) largest = left;
-        if (right < arrayList.size() && arrayList.get(right) > arrayList.get(largest)) largest = right;
+        if (left < n && arrayList.get(left) > arrayList.get(largest)) largest = left;
+        if (right < n && arrayList.get(right) > arrayList.get(largest)) largest = right;
         if (largest != i) {
             swapArrayList(arrayList, i, largest);
-            maxHeapify(arrayList, largest);
+            maxHeapify(arrayList, n, largest);
         }
     }
 
@@ -2545,6 +2546,43 @@ public class CodingNinjas {
             swapHeap(arr, i, largest);
             maxHeapifyFromArray(arr, largest);
         }
+    }
+
+    static ArrayList<Integer> heapSort(ArrayList<Integer> arrayList, int n) {
+        buildMaxHeap(arrayList);
+        for (int i = arrayList.size() - 1; i >= 1; i--) {
+            swapArrayList(arrayList, 0, i);
+            maxHeapify(arrayList, i, 0);
+        }
+        return arrayList;
+    }
+
+    static ArrayList<Integer> buildMaxHeap(ArrayList<Integer> arrayList) {
+        for (int i = (arrayList.size() - 2) / 2; i >= 0; i--)
+            maxHeapify(arrayList, arrayList.size(), i);
+        return arrayList;
+    }
+
+    // TODO: SUBMIT IN 2x BOOSTER
+    public static boolean findInMatrix(int x, ArrayList<ArrayList<Integer>> arr) {
+        int i = 0, j = arr.get(0).size() - 1;
+        while (i < arr.size() && j >= 0) {
+            if (arr.get(i).get(j) == x) return true;
+            else if (arr.get(i).get(j) > x) j--;
+            else i++;
+        }
+        return false;
+    }
+
+    static boolean searchElement(int[][] MATRIX, int target) {
+        int R = MATRIX.length, C = MATRIX[0].length;
+        int i = 0, j = C - 1;
+        while (i < R && C >= j) {
+            if (MATRIX[i][j] == target) return true;
+            else if (MATRIX[i][j] < target) j--;
+            else i++;
+        }
+        return true;
     }
 
     public int searchInRotatedSortedArray(int[] nums, int target) {
@@ -2619,6 +2657,71 @@ public class CodingNinjas {
         int front() {
             // Implement the front() function
             return head != null ? head.data : -1;
+        }
+    }
+
+    public static class MinHeap {
+        int[] heap;
+        int heapSize;
+
+        // Constructor for the class.
+        MinHeap() {
+            // Write your code here.
+            heapSize = 0;
+            heap = new int[100000];
+        }
+
+        // Implement the function to heapify the heap.
+        void heapify(int i) {
+            // Write your code here.
+            int lt = 2 * i + 1;
+            int rt = 2 * i + 2;
+            int smallest = i;
+            if (lt < heapSize && heap[lt] < heap[smallest]) smallest = lt;
+            if (rt < heapSize && heap[rt] < heap[smallest]) smallest = rt;
+            if (smallest != i) {
+                swap(i, smallest);
+                heapify(smallest);
+            }
+        }
+
+        // Implement the function to insert 'val' in the heap.
+        void insert(int val) {
+            // Write your code here.
+            heap[heapSize] = val;
+            int i = heapSize;
+            heapSize++;
+            while (i != 0 && heap[parent(i)] > heap[i]) {
+                int tmp = heap[i];
+                heap[i] = heap[parent(i)];
+                heap[parent(i)] = tmp;
+
+                i = parent(i);
+            }
+        }
+
+        // Implement the function to remove minimum element.
+        void removeMin() {
+            // Write your code here.
+            if (heapSize == 1) {
+                heapSize--;
+                return;
+            }
+            heap[0] = heap[heapSize - 1];
+            heapSize--;
+            heapify(0);
+        }
+
+        // Implement the function to return minimum element.
+        int minElement() {
+            // Write your code here.
+            return heap[0];
+        }
+
+        void swap(int i, int j) {
+            int tmp = heap[i];
+            heap[i] = heap[j];
+            heap[j] = tmp;
         }
     }
 
