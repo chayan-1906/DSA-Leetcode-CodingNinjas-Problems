@@ -330,8 +330,10 @@ public class LeetCode {
 //        System.out.println(Arrays.deepToString(generateMatrixSpirally(3)));
 //        System.out.println(Arrays.deepToString(generateMatrixSpirally(2)));
 
-        System.out.println(Arrays.deepToString(transpose(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})));
-        System.out.println(Arrays.deepToString(transpose(new int[][]{{1, 2, 3}, {4, 5, 6}})));
+//        System.out.println(Arrays.deepToString(transpose(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})));
+//        System.out.println(Arrays.deepToString(transpose(new int[][]{{1, 2, 3}, {4, 5, 6}})));
+
+//        System.out.println(canConstruct("aa", "ab"));
     }
 
     public static int subarraySum(int[] nums, int k) {
@@ -1097,6 +1099,80 @@ public class LeetCode {
             pointerN--;
             pointerMerged--;
         }
+    }
+
+    public static boolean canConstruct(String ransomNote, String magazine) {
+        /* native solution */
+        /*HashMap<Character, Integer> hashMapMagazine = new HashMap<>();
+
+        HashMap<Character, Integer> hashMapRansomNote = new HashMap<>();
+
+        for (int i = 0; i < magazine.length(); i++) {
+            if (hashMapMagazine.containsKey(magazine.charAt(i))) {
+                hashMapMagazine.put(magazine.charAt(i), hashMapMagazine.get(magazine.charAt(i)) + 1);
+            } else {
+                hashMapMagazine.put(magazine.charAt(i), 1);
+            }
+        }
+
+        for (int i = 0; i < ransomNote.length(); i++) {
+            if (hashMapRansomNote.containsKey(ransomNote.charAt(i))) {
+                hashMapRansomNote.put(ransomNote.charAt(i), hashMapRansomNote.get(ransomNote.charAt(i)) + 1);
+            } else {
+                hashMapRansomNote.put(ransomNote.charAt(i), 1);
+            }
+        }
+
+        for (Map.Entry<Character, Integer> hashMapKey : hashMapRansomNote.entrySet()) {
+            System.out.println(hashMapKey);
+            if (hashMapMagazine.getOrDefault(hashMapKey.getKey(), 0) < hashMapKey.getValue())
+                return false;
+        }
+        return true;*/
+
+        HashMap<Character, Integer> hashMapMagazine = new HashMap<>();
+
+        for (int i = 0; i < magazine.length(); i++) {
+            Character chars = magazine.charAt(i);
+            hashMapMagazine.put(chars, hashMapMagazine.getOrDefault(chars, 0) + 1);
+        }
+        System.out.println(hashMapMagazine);
+
+        for (int i = 0; i < ransomNote.length(); i++) {
+            Character chars = ransomNote.charAt(i);
+//            if (!hashMapMagazine.containsKey(chars)) return false;
+            if (hashMapMagazine.getOrDefault(chars, 0) == 0) return false;
+            hashMapMagazine.put(chars, hashMapMagazine.get(chars) - 1);
+        }
+
+        return true;
+    }
+
+    public static boolean isIsomorphic(String s, String t) {
+        if (s.length() != t.length()) return false;
+
+        HashMap<Character, Character> sHashMap = new HashMap<>();
+        HashMap<Character, Character> tHashMap = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            Character charS = s.charAt(i);
+            Character charT = t.charAt(i);
+
+            /* map from s to t */
+            if (sHashMap.containsKey(charS)) {
+                if (sHashMap.get(charS) != charT) return false;
+            } else {
+                sHashMap.put(charS, charT);
+            }
+
+            /* map from t to s */
+            if (tHashMap.containsKey(charT)) {
+                if (tHashMap.get(charT) != charS) return false;
+            } else {
+                tHashMap.put(charT, charS);
+            }
+        }
+
+        return true;
     }
 
     static class MyCircularQueue {
